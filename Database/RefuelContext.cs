@@ -9,6 +9,12 @@ namespace Database
         public DbSet<User> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Refuel> Refuels { get; set; }
+
+        public RefuelContext(DbContextOptions<RefuelContext> options) : base(options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;database=pet;user=root;password=");
