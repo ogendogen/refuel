@@ -9,10 +9,10 @@ namespace Database.Models
         public int ID { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
-        public string Engine { get; set; }
+        public decimal Engine { get; set; }
         public int Horsepower { get; set; }
         public string Description { get; set; }
-        public uint OwnerID { get; set; }
+        public User Owner { get; set; }
         public virtual ICollection<Refuel> Refuels { get; set; }
     }
 }

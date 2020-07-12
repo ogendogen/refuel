@@ -7,7 +7,6 @@ namespace Database.Models
     public class Refuel
     {
         public int ID { get; set; }
-        public int VehicleID { get; set; }
         public DateTime Date { get; set; }
         public uint Kilometers { get; set; }
         public decimal PricePerLiter { get; set; }
@@ -15,5 +14,6 @@ namespace Database.Models
         public decimal Combustion { get; set; }
         public FuelType Fuel { get; set; }
         public decimal TotalPrice { get; set; }
+        public Vehicle Vehicle { get; set; }
     }
 }
