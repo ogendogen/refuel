@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Database
 {
     public interface IUsersManager
     {
-        public bool Authenticate(string login, string password);
-        public int SaveChanges();
-        public string GetUserSalt(string login);
+        Task<bool> Authenticate(string login, string password);
+        int SaveChanges();
+        string GetUserSalt(string login);
     }
 }
