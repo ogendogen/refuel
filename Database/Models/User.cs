@@ -13,5 +13,10 @@ namespace Database.Models
         public string Email { get; set; }
         public DateTime RegisterDate { get; set; }
         public virtual ICollection<Vehicle> Vehicles { get; set; }
+
+        public User()
+        {
+            Vehicles = new List<Vehicle>();
+        }
     }
 }

@@ -14,5 +14,10 @@ namespace Database.Models
         public string Description { get; set; }
         public User Owner { get; set; }
         public virtual ICollection<Refuel> Refuels { get; set; }
+
+        public Vehicle()
+        {
+            Refuels = new List<Refuel>();
+        }
     }
 }

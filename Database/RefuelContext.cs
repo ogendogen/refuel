@@ -10,6 +10,11 @@ namespace Database
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Refuel> Refuels { get; set; }
 
+        public RefuelContext()
+        {
+
+        }
+
         public RefuelContext(DbContextOptions<RefuelContext> options) : base(options)
         {
 
@@ -17,7 +22,7 @@ namespace Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;database=pet;user=root;password=");
+            optionsBuilder.UseMySql("server=localhost;database=refuel;user=root;password=");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,7 +57,8 @@ namespace Database
                 entity.Property(e => e.Horsepower).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
 
-                entity.Property(e => e.Owner).IsRequired();
+                //entity.Property(e => e.Owner).IsRequired();
+
                 entity.HasOne(e => e.Owner)
                     .WithMany(e => e.Vehicles);
 
@@ -73,7 +79,8 @@ namespace Database
                 entity.Property(e => e.Combustion).IsRequired();
                 entity.Property(e => e.Fuel).IsRequired();
                 
-                entity.Property(e => e.Vehicle).IsRequired();
+                //entity.Property(e => e.Vehicle).IsRequired();
+
                 entity.HasOne(e => e.Vehicle)
                     .WithMany(e => e.Refuels);
             });

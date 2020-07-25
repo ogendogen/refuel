@@ -25,10 +25,11 @@ namespace Refuel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<RefuelContext>(options =>
-            {
-                options.UseMySql("server=localhost;database=pet;user=root;password=");
-            });
+            services.AddDbContext<RefuelContext>();
+            //services.AddDbContextPool<RefuelContext>(options =>
+            //{
+            //    options.UseMySql("server=localhost;database=pet;user=root;password=");
+            //});
 
             services.AddRazorPages();
         }
