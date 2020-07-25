@@ -26,10 +26,6 @@ namespace Refuel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RefuelContext>();
-            //services.AddDbContextPool<RefuelContext>(options =>
-            //{
-            //    options.UseMySql("server=localhost;database=pet;user=root;password=");
-            //});
 
             services.AddRazorPages();
         }

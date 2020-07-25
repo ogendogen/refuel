@@ -57,8 +57,6 @@ namespace Database
                 entity.Property(e => e.Horsepower).IsRequired();
                 entity.Property(e => e.Description).IsRequired();
 
-                //entity.Property(e => e.Owner).IsRequired();
-
                 entity.HasOne(e => e.Owner)
                     .WithMany(e => e.Vehicles);
 
@@ -78,8 +76,6 @@ namespace Database
                 entity.Property(e => e.Liters).IsRequired();
                 entity.Property(e => e.Combustion).IsRequired();
                 entity.Property(e => e.Fuel).IsRequired();
-                
-                //entity.Property(e => e.Vehicle).IsRequired();
 
                 entity.HasOne(e => e.Vehicle)
                     .WithMany(e => e.Refuels);
