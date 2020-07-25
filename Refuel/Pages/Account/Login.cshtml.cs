@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Database;
+using Database.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +14,16 @@ namespace Refuel.Pages.Account
 {
     public class LoginModel : PageModel
     {
+        private readonly IUsersManager usersManager;
+
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public LoginModel(IUsersManager usersManager)
+        {
+            this.usersManager = usersManager;
+        }
 
         public async Task OnGetAsync(string returnUrl = "")
         {
@@ -30,7 +40,33 @@ namespace Refuel.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // authenticate
+                User user = await usersManager.Authenticate(Input.Login, Input.Password);
+                if (user == null)
+                {
+                    ModelState.AddModelError(String.Empty, "Niepoprawne dane logowania!");
+                    return Page();
+                }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Login)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = Input.Remember
+                    });
+
+                if (!Url.IsLocalUrl(returnUrl))
+                {
+                    returnUrl = Url.Content("~/");
+                }
+
+                return LocalRedirect(returnUrl);
             }
 
             return Page();

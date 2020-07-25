@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Database.Models;
 
 namespace Database
 {
@@ -18,11 +19,11 @@ namespace Database
             ctx = refuelContext;
         }
 
-        public async Task<bool> Authenticate(string login, string password)
+        public async Task<User> Authenticate(string login, string password)
         {
             string salt = GetUserSalt(login);
             string hashed = HashPassword(password, salt);
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == password) != null;
+            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == password);
         }
 
         public int SaveChanges()

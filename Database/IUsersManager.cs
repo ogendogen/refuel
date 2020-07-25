@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Database.Models;
 
 namespace Database
 {
     public interface IUsersManager
     {
-        Task<bool> Authenticate(string login, string password);
+        Task<User> Authenticate(string login, string password);
         int SaveChanges();
         string GetUserSalt(string login);
     }
