@@ -26,8 +26,8 @@ namespace Refuel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RefuelContext>();
-
             services.AddRazorPages();
+            services.AddScoped<IUsersManager, UsersManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
