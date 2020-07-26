@@ -11,5 +11,6 @@ namespace Database
         Task<User> Authenticate(string login, string password);
         int SaveChanges();
         string GetUserSalt(string login);
+        Task<User> RegisterNewUser(string login, string password, string email);
     }
 }

@@ -13,10 +13,12 @@ namespace Database
     public class UsersManager : IUsersManager
     {
         private readonly RefuelContext ctx;
+        private readonly RandomNumberGenerator rng;
 
         public UsersManager(RefuelContext refuelContext)
         {
             ctx = refuelContext;
+            rng = RNGCryptoServiceProvider.Create();
         }
 
         public async Task<User> Authenticate(string login, string password)
@@ -38,6 +40,39 @@ namespace Database
         public string GetUserSalt(string login)
         {
             return ctx.Users.FirstOrDefault(user => user.Login == login)?.Salt;
+        }
+
+        public async Task<User> RegisterNewUser(string login, string password, string email)
+        {
+            string salt = GenerateSalt();
+            string hashedPassword = HashPassword(password, salt);
+
+            var entityUser = await ctx.AddAsync(new User()
+            {
+                Login = login,
+                Password = hashedPassword,
+                Salt = salt,
+                Email = email,
+                RegisterDate = DateTime.Now
+            });
+            
+            return entityUser.Entity;
+        }
+
+        private string GenerateSalt()
+        {
+            string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+{}|:\"<>?`-=[]\\;',./";
+
+            int size = RNGCryptoServiceProvider.GetInt32(1, 21);
+            int length = chars.Length;
+            StringBuilder salt = new StringBuilder();
+            for (int i=0; i<size; i++)
+            {
+                int choosen = RNGCryptoServiceProvider.GetInt32(length);
+                salt.Append(chars[choosen]);
+            }
+
+            return salt.ToString();
         }
 
         private string HashPassword(string password, string salt)
