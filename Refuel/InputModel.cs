@@ -10,10 +10,11 @@ namespace Refuel
         public string Login { get; set; }
 
         [Required]
+        [Display(Name = "Hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Zapamiętać?")]
-        public bool Remember { get; set; }
+        [Display(Name = "Zapamiętaj mnie")]
+        public bool RememberMe { get; set; }
     }
 }

@@ -58,7 +58,7 @@ namespace Refuel.Pages.Account
                     new ClaimsPrincipal(claimsIdentity),
                     new AuthenticationProperties
                     {
-                        IsPersistent = Input.Remember
+                        IsPersistent = Input.RememberMe
                     });
 
                 if (!Url.IsLocalUrl(returnUrl))
