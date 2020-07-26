@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 
 namespace Refuel.Pages.Account
 {
@@ -17,7 +18,7 @@ namespace Refuel.Pages.Account
         private readonly IUsersManager usersManager;
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputLoginModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 

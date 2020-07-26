@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Refuel
+namespace Models
 {
-    public class InputModel
+    public class InputLoginModel
     {
         [Required]
         [Display(Name = "Login")]

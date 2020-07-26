@@ -1,21 +1,16 @@
 ﻿@page
-@model LoginModel
+@model RegisterModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
 }
 
-<h1>Login</h1>
+<h1>Register</h1>
 <div class="row">
-    <div class="col-md-3 col-lg-4">
-
-    </div>
+    <div class="col-md-3 col-lg-4"></div>
     <div class="col-md-6 col-lg-4">
         <form method="post">
-            @if (!User.Identity.IsAuthenticated && Request.Query.ContainsKey("ReturnUrl"))
-            {
-                <span class="text-danger">Najpierw się zaloguj!</span>
-            }
             <div asp-validation-summary="All" class="text-dark" />
+
             <div class="form-group">
                 <label asp-for="Input.Login">
                     @Html.DisplayNameFor(model => model.Input.Login)
@@ -35,32 +30,34 @@
             </div>
 
             <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" asp-for="Input.RememberMe" />
-                    <label class="custom-control-label" asp-for="Input.RememberMe">
-                        @Html.DisplayNameFor(model => model.Input.RememberMe)
-                    </label>
-                </div>
+                <label asp-for="Input.Password2">
+                    @Html.DisplayNameFor(model => model.Input.Password2)
+                </label>
+                <input asp-for="Input.Password2" class="form-control" />
 
-                <span asp-validation-for="Input.RememberMe" class="text-dark" />
+                <span asp-validation-for="Input.Password2" class="text-dark" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email">
+                    @Html.DisplayNameFor(model => model.Input.Email)
+                </label>
+                <input asp-for="Input.Email" class="form-control" />
+
+                <span asp-validation-for="Input.Email" class="text-dark" />
             </div>
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">
-                    Zaloguj się
+                    Zarejestruj się
                 </button>
-
-                <a asp-controller="Account" asp-action="Register">
-                    Brak konta? Zarejestruj się
-                </a>
             </div>
+
         </form>
     </div>
-    <div class="col-md-3 col-lg-4">
-
-    </div>
+    <div class="col-md-3 col-lg-4"></div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 }
