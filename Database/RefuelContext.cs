@@ -37,7 +37,7 @@ namespace Database
                 entity.Property(e => e.Login).IsRequired().HasMaxLength(20);
                 entity.HasIndex(e => e.Login).IsUnique();
 
-                entity.Property(e => e.Password).IsRequired().HasMaxLength(32);
+                entity.Property(e => e.Password).IsRequired().HasMaxLength(64);
                 entity.Property(e => e.Salt).IsRequired().HasMaxLength(20);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(64);
                 entity.Property(e => e.RegisterDate).IsRequired();
