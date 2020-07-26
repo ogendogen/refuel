@@ -11,25 +11,29 @@
     </div>
     <div class="col-md-6 col-lg-4">
         <form method="post">
-            <div asp-validation-summary="All" class="text-dark"/>
+            @if (!User.Identity.IsAuthenticated && Request.Query.ContainsKey("ReturnUrl"))
+            {
+                <span class="text-danger">Najpierw się zaloguj!</span>
+            }
+            <div asp-validation-summary="All" class="text-dark" />
             <div class="form-group">
                 <label asp-for="Input.Login">
                     @Html.DisplayNameFor(model => model.Input.Login)
                 </label>
                 <input asp-for="Input.Login" class="form-control" />
 
-                <span asp-validation-for="Input.Login" class="text-dark"/>
+                <span asp-validation-for="Input.Login" class="text-dark" />
             </div>
 
             <div class="form-group">
                 <label asp-for="Input.Password">
                     @Html.DisplayNameFor(model => model.Input.Password)
                 </label>
-                <input asp-for="Input.Password" class="form-control"/>
+                <input asp-for="Input.Password" class="form-control" />
 
-                <span asp-validation-for="Input.Password" class="text-dark"/>
+                <span asp-validation-for="Input.Password" class="text-dark" />
             </div>
-            
+
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
                     <input class="custom-control-input" asp-for="Input.RememberMe" />
