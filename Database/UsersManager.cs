@@ -22,6 +22,10 @@ namespace Database
         public async Task<User> Authenticate(string login, string password)
         {
             string salt = GetUserSalt(login);
+            if (salt == null)
+            {
+                return null;
+            }
             string hashed = HashPassword(password, salt);
             return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == password);
         }

@@ -16,6 +16,7 @@ namespace Refuel.Pages.Account
     {
         private readonly IUsersManager usersManager;
 
+        [BindProperty]
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
