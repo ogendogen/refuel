@@ -12,5 +12,7 @@ namespace Database
         int SaveChanges();
         string GetUserSalt(string login);
         Task<User> RegisterNewUser(string login, string password, string email);
+        Task<bool> IsLoginUsed(string login);
+        Task<bool> IsEmailUsed(string email);
     }
 }

@@ -59,6 +59,16 @@ namespace Database
             return entityUser.Entity;
         }
 
+        public async Task<bool> IsLoginUsed(string login)
+        {
+            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login) != null;
+        }
+
+        public async Task<bool> IsEmailUsed(string email)
+        {
+            return await ctx.Users.FirstOrDefaultAsync(user => user.Email == email) != null;
+        }
+
         private string GenerateSalt()
         {
             string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+{}|:\"<>?`-=[]\\;',./";
