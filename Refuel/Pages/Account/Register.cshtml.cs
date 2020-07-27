@@ -15,6 +15,9 @@ namespace Refuel.Pages.Account
     {
         private readonly IUsersManager usersManager;
 
+        public string FormError { get; set; }
+        public string FormSuccess { get; set; }
+
         [BindProperty]
         public InputRegisterModel Input { get; set; }
         public RegisterModel(IUsersManager usersManager)
@@ -33,30 +36,31 @@ namespace Refuel.Pages.Account
             {
                 if (Input.Password != Input.Password2)
                 {
-                    ModelState.AddModelError(String.Empty, "Hasła różnią się od siebie!");
+                    FormError = "Hasła różnią się od siebie!";
                     return Page();
                 }
 
                 if (await usersManager.IsEmailUsed(Input.Email))
                 {
-                    ModelState.AddModelError(String.Empty, "Email jest już zajęty!");
+                    FormError = "Email jest już zajęty!";
                     return Page();
                 }
 
                 if (await usersManager.IsLoginUsed(Input.Login))
                 {
-                    ModelState.AddModelError(String.Empty, "Login jest już zajęty!");
+                    FormError = "Login jest już zajęty!";
                     return Page();
                 }
 
                 User user = await usersManager.RegisterNewUser(Input.Login, Input.Password, Input.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError(String.Empty, "Niepoprawne dane logowania!");
+                    FormError = "Błąd rejestracji!";
                     return Page();
                 }
 
                 usersManager.SaveChanges();
+                FormSuccess = "Konto założone pomyślnie!";
             }
 
             return Page();
