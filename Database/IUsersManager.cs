@@ -14,5 +14,6 @@ namespace Database
         Task<User> RegisterNewUser(string login, string password, string email);
         Task<bool> IsLoginUsed(string login);
         Task<bool> IsEmailUsed(string email);
+        Task<bool> IsUsersEmailVerified(User user);
     }
 }

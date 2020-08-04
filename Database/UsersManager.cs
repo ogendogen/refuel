@@ -102,5 +102,10 @@ namespace Database
                 return builder.ToString();
             }
         }
+
+        public Task<bool> IsUsersEmailVerified(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
