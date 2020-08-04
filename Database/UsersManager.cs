@@ -29,7 +29,7 @@ namespace Database
                 return null;
             }
             string hashed = HashPassword(password, salt);
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == password);
+            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == hashed);
         }
 
         public int SaveChanges()

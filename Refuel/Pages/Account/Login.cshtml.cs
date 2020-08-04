@@ -17,6 +17,9 @@ namespace Refuel.Pages.Account
     {
         private readonly IUsersManager usersManager;
 
+        public string FormError { get; set; }
+        public string FormSuccess { get; set; }
+
         [BindProperty]
         public InputLoginModel Input { get; set; }
 
@@ -45,7 +48,7 @@ namespace Refuel.Pages.Account
                 User user = await usersManager.Authenticate(Input.Login, Input.Password);
                 if (user == null)
                 {
-                    ModelState.AddModelError(String.Empty, "Niepoprawne dane logowania!");
+                    FormError = "Niepoprawne dane logowania!";
                     return Page();
                 }
 
@@ -67,6 +70,8 @@ namespace Refuel.Pages.Account
                 {
                     returnUrl = Url.Content("~/");
                 }
+
+                FormSuccess = "Zostałeś poprawnie zalogowany!";
 
                 return LocalRedirect(returnUrl);
             }
