@@ -44,6 +44,7 @@ namespace Database
                 entity.HasIndex(e => e.Email).IsUnique();
 
                 entity.Property(e => e.RegisterDate).IsRequired();
+                entity.Property(e => e.VerificationCode).IsRequired().HasMaxLength(32).HasDefaultValue("0");
 
                 entity.HasMany(e => e.Vehicles)
                     .WithOne(e => e.Owner);
