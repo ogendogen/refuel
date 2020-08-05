@@ -95,9 +95,22 @@ namespace Database
             }
         }
 
-        public Task<bool> IsUsersEmailVerified(User user)
+        public async Task<bool> IsUsersEmailVerified(User user)
         {
-            throw new NotImplementedException();
+            var dbUser = await ctx.Users.FirstAsync(dbUser => user.ID == dbUser.ID);
+            return dbUser.Email == "0";
+        }
+
+        public async Task<int> VerifyUser(int id, string verificationCode)
+        {
+            User user = await ctx.Users.FirstAsync(user => user.ID == id);
+            if (user.VerificationCode != "0" && user.VerificationCode == verificationCode)
+            {
+                user.VerificationCode = "0";
+                ctx.Users.Update(user);
+            }
+
+            return await ctx.SaveChangesAsync();
         }
     }
 }
