@@ -24,6 +24,7 @@ namespace Models
         [StringLength(64, ErrorMessage = "Email może mieć maksymalnie 64 znaki!")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Adres Email")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Niepoprawny adres email!")]
         public string Email { get; set; }
     }
 }
