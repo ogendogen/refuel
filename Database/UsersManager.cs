@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Database.Models;
+using Utils;
 
 namespace Database
 {
@@ -53,7 +54,8 @@ namespace Database
                 Password = hashedPassword,
                 Salt = salt,
                 Email = email,
-                RegisterDate = DateTime.Now
+                RegisterDate = DateTime.Now,
+                VerificationCode = Utils.Utils.GenerateRandomString(32)
             });
             
             return entityUser.Entity;
