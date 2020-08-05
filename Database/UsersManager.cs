@@ -73,18 +73,8 @@ namespace Database
 
         private string GenerateSalt()
         {
-            string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+{}|:\"<>?`-=[]\\;',./";
-
             int size = RNGCryptoServiceProvider.GetInt32(1, 21);
-            int length = chars.Length;
-            StringBuilder salt = new StringBuilder();
-            for (int i=0; i<size; i++)
-            {
-                int choosen = RNGCryptoServiceProvider.GetInt32(length);
-                salt.Append(chars[choosen]);
-            }
-
-            return salt.ToString();
+            return Utils.Utils.GenerateRandomString(size);
         }
 
         private string HashPassword(string password, string salt)
