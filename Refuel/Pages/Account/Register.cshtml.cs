@@ -7,22 +7,28 @@ using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using Models;
+using Utils;
 
 namespace Refuel.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly IUsersManager usersManager;
+        private readonly IUsersManager _usersManager;
+        private readonly IEmailManager _emailManager;
+        private readonly IOptions<EmailSettings> _settings;
 
         public string FormError { get; set; }
         public string FormSuccess { get; set; }
 
         [BindProperty]
         public InputRegisterModel Input { get; set; }
-        public RegisterModel(IUsersManager usersManager)
+        public RegisterModel(IUsersManager usersManager, IEmailManager emailManager, IOptions<EmailSettings> settings)
         {
-            this.usersManager = usersManager;
+            _usersManager = usersManager;
+            _emailManager = emailManager;
+            _settings = settings;
         }
 
         public void OnGet()
@@ -40,27 +46,38 @@ namespace Refuel.Pages.Account
                     return Page();
                 }
 
-                if (await usersManager.IsEmailUsed(Input.Email))
+                if (await _usersManager.IsEmailUsed(Input.Email))
                 {
                     FormError = "Email jest już zajęty!";
                     return Page();
                 }
 
-                if (await usersManager.IsLoginUsed(Input.Login))
+                if (await _usersManager.IsLoginUsed(Input.Login))
                 {
                     FormError = "Login jest już zajęty!";
                     return Page();
                 }
 
-                User user = await usersManager.RegisterNewUser(Input.Login, Input.Password, Input.Email);
+                User user = await _usersManager.RegisterNewUser(Input.Login, Input.Password, Input.Email);
                 if (user == null)
                 {
                     FormError = "Błąd rejestracji!";
                     return Page();
                 }
 
-                usersManager.SaveChanges();
-                FormSuccess = "Konto założone pomyślnie!";
+                _emailManager.SendEmail(new Email()
+                {
+                    SmtpAddress = _settings.Value.PrimaryDomain,
+                    Port = _settings.Value.PrimaryPort,
+                    From = _settings.Value.UsernameEmail,
+                    Password = "***",
+                    To = user.Email,
+                    Header = "Aktywacja konta Refuel",
+                    Body = "testowa wiadomość"
+                });
+
+                _usersManager.SaveChanges();
+                FormSuccess = "Konto założone pomyślnie! Aktywuj swoje konto klikając w link w swojej poczcie email.";
             }
 
             return Page();
