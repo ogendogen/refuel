@@ -52,6 +52,12 @@ namespace Refuel.Pages.Account
                     return Page();
                 }
 
+                if (user.VerificationCode != "0")
+                {
+                    FormError = "Konto nie zostało jeszcze aktywowane!";
+                    return Page();
+                }
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Login)
