@@ -18,17 +18,22 @@ namespace Refuel.Pages.Account
         private readonly IUsersManager _usersManager;
         private readonly IEmailManager _emailManager;
         private readonly IOptions<EmailSettings> _settings;
+        private readonly IOptions<Passwords> _passwords;
 
         public string FormError { get; set; }
         public string FormSuccess { get; set; }
 
         [BindProperty]
         public InputRegisterModel Input { get; set; }
-        public RegisterModel(IUsersManager usersManager, IEmailManager emailManager, IOptions<EmailSettings> settings)
+        public RegisterModel(IUsersManager usersManager, 
+            IEmailManager emailManager, 
+            IOptions<EmailSettings> settings,
+            IOptions<Passwords> passwords)
         {
             _usersManager = usersManager;
             _emailManager = emailManager;
             _settings = settings;
+            _passwords = passwords;
         }
 
         public void OnGet()
@@ -70,10 +75,10 @@ namespace Refuel.Pages.Account
                     SmtpAddress = _settings.Value.PrimaryDomain,
                     Port = _settings.Value.PrimaryPort,
                     From = _settings.Value.UsernameEmail,
-                    Password = "***",
+                    Password = _passwords.Value.EmailPassword,
                     To = user.Email,
                     Header = "Aktywacja konta Refuel",
-                    Body = "testowa wiadomość"
+                    Body = $"Witaj {user.Login}! Kliknij aby aktywować konto {user.VerificationCode}"
                 });
 
                 _usersManager.SaveChanges();

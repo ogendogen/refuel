@@ -17,11 +17,12 @@ namespace Refuel
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.secrets.json", optional: false, reloadOnChange: true)
                 .AddUserSecrets<Startup>();
 
             Configuration = builder.Build();
