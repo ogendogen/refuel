@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Refuel
 {
-    public class Passwords
+    public class Recaptcha
     {
-        public string EmailPassword { get; set; }
-        public string RecaptchaSecretKey { get; set; }
+        public string SiteKey { get; set; }
     }
 }

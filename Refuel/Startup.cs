@@ -50,6 +50,7 @@ namespace Refuel
             services.AddOptions();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<Passwords>(Configuration.GetSection("Passwords"));
+            services.Configure<Recaptcha>(Configuration.GetSection("Recaptcha"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
