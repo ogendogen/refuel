@@ -97,13 +97,18 @@ namespace Database
 
         public async Task<bool> IsUsersEmailVerified(User user)
         {
-            var dbUser = await ctx.Users.FirstAsync(dbUser => user.ID == dbUser.ID);
-            return dbUser.Email == "0";
+            var dbUser = await ctx.Users.FirstOrDefaultAsync(dbUser => user.ID == dbUser.ID);
+            return dbUser != null && dbUser.Email == "0";
         }
 
         public async Task<int> VerifyUser(int id, string verificationCode)
         {
-            User user = await ctx.Users.FirstAsync(user => user.ID == id);
+            User user = await ctx.Users.FirstOrDefaultAsync(user => user.ID == id);
+            if (user == null)
+            {
+                return 0;
+            }
+
             if (user.VerificationCode != "0" && user.VerificationCode == verificationCode)
             {
                 user.VerificationCode = "0";
