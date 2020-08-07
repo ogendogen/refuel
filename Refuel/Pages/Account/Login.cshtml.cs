@@ -23,26 +23,18 @@ namespace Refuel.Pages.Account
         [BindProperty]
         public InputLoginModel Input { get; set; }
 
-        public string ReturnUrl { get; set; }
-
         public LoginModel(IUsersManager usersManager)
         {
             this.usersManager = usersManager;
         }
 
-        public async Task OnGetAsync(string returnUrl = "")
+        public async Task OnGetAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            returnUrl ??= Url.Content("~/");
-
-            ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = "")
+        public async Task<IActionResult> OnPostAsync()
         {
-            ReturnUrl = returnUrl;
-
             if (ModelState.IsValid)
             {
                 User user = await usersManager.Authenticate(Input.Login, Input.Password);
@@ -72,14 +64,9 @@ namespace Refuel.Pages.Account
                         IsPersistent = Input.RememberMe
                     });
 
-                if (!Url.IsLocalUrl(returnUrl))
-                {
-                    returnUrl = Url.Content("~/");
-                }
-
                 FormSuccess = "Zostałeś poprawnie zalogowany!";
 
-                return LocalRedirect(returnUrl);
+                return LocalRedirect("/Panel/Index");
             }
 
             return Page();
