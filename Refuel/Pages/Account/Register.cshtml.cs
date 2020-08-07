@@ -70,6 +70,8 @@ namespace Refuel.Pages.Account
                     return Page();
                 }
 
+                string code = Utils.Utils.UrlEncode(Utils.Utils.ToBase64(user.VerificationCode));
+
                 _usersManager.SaveChanges();
 
                 _emailManager.SendEmail(new Email()
@@ -80,7 +82,7 @@ namespace Refuel.Pages.Account
                     Password = _passwords.Value.EmailPassword,
                     To = user.Email,
                     Header = "Aktywacja konta Refuel",
-                    Body = $"Witaj {user.Login}! Kliknij aby aktywować konto {Request.Scheme}://{Request.Host}{Request.PathBase}/Account/Activate?id={user.ID}&activationCode={Utils.Utils.UrlEncode(user.VerificationCode)}",
+                    Body = $"Witaj {user.Login}! Kliknij aby aktywować konto {Request.Scheme}://{Request.Host}{Request.PathBase}/Account/Activate?id={user.ID}&activationCode={code}",
                 });
 
                 FormSuccess = "Konto założone pomyślnie! Aktywuj swoje konto klikając w link w swojej poczcie email.";

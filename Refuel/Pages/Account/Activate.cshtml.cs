@@ -20,6 +20,7 @@ namespace Refuel.Pages.Account
 
         public async Task<IActionResult> OnGet(int id, string activationCode)
         {
+            activationCode = Utils.Utils.FromBase64(activationCode);
             int verified = await _usersManager.VerifyUser(id, activationCode);
             if (verified > 0)
             {
