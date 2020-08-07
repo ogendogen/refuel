@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 namespace Utils
 {
@@ -20,6 +21,16 @@ namespace Utils
             }
 
             return salt.ToString();
+        }
+
+        public static string UrlEncode(string input)
+        {
+            return HttpUtility.UrlEncode(input);
+        }
+
+        public static string UrlDecode(string input)
+        {
+            return HttpUtility.UrlDecode(input);
         }
     }
 }
