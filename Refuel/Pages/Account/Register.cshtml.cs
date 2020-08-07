@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Database;
 using Database.Models;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Models;
+using Newtonsoft.Json.Linq;
 using Utils;
 
 namespace Refuel.Pages.Account
@@ -76,6 +79,12 @@ namespace Refuel.Pages.Account
                     return Page();
                 }
 
+                if (!IsReCaptchaValid())
+                {
+                    FormError = "Nieudana weryfikacja ReCaptcha! Spróbuj ponownie.";
+                    return Page();
+                }
+
                 string code = Utils.Utils.UrlEncode(Utils.Utils.ToBase64(user.VerificationCode));
 
                 _usersManager.SaveChanges();
@@ -95,6 +104,23 @@ namespace Refuel.Pages.Account
             }
 
             return Page();
+        }
+
+        public bool IsReCaptchaValid()  
+        {
+            var captchaResponse = Request.Form["g-recaptcha-response"];
+            var secretKey = _recaptcha.Value.SiteKey;
+            var apiUrl = $"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}";
+            var request = (HttpWebRequest)WebRequest.Create(apiUrl);
+      
+            using(WebResponse response = request.GetResponse())
+            {
+                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                {
+                    JObject jResponse = JObject.Parse(stream.ReadToEnd());
+                    return jResponse.Value<bool>("success");
+                }
+            }
         }
     }
 }
