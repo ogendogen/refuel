@@ -22,8 +22,7 @@ namespace Refuel
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.secrets.json", optional: false, reloadOnChange: true)
-                .AddUserSecrets<Startup>();
+                .AddJsonFile("appsettings.secrets.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
         }
