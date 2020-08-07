@@ -109,7 +109,7 @@ namespace Refuel.Pages.Account
         public bool IsReCaptchaValid()  
         {
             var captchaResponse = Request.Form["g-recaptcha-response"];
-            var secretKey = _recaptcha.Value.SiteKey;
+            var secretKey = _passwords.Value.RecaptchaSecretKey;
             var apiUrl = $"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}";
             var request = (HttpWebRequest)WebRequest.Create(apiUrl);
       
