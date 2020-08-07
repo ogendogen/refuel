@@ -49,6 +49,7 @@ namespace Refuel
             services.AddMvc();
             services.AddOptions();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<Passwords>(Configuration.GetSection("Passwords"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
