@@ -19,21 +19,27 @@ namespace Refuel.Pages.Account
         private readonly IEmailManager _emailManager;
         private readonly IOptions<EmailSettings> _settings;
         private readonly IOptions<Passwords> _passwords;
+        private readonly IOptions<Recaptcha> _recaptcha;
 
         public string FormError { get; set; }
         public string FormSuccess { get; set; }
+        public string RecaptchaSiteKey { get; set; }
 
         [BindProperty]
         public InputRegisterModel Input { get; set; }
         public RegisterModel(IUsersManager usersManager, 
             IEmailManager emailManager, 
             IOptions<EmailSettings> settings,
-            IOptions<Passwords> passwords)
+            IOptions<Passwords> passwords,
+            IOptions<Recaptcha> recaptcha)
         {
             _usersManager = usersManager;
             _emailManager = emailManager;
             _settings = settings;
             _passwords = passwords;
+            _recaptcha = recaptcha;
+
+            RecaptchaSiteKey = _recaptcha.Value.SiteKey;
         }
 
         public void OnGet()
