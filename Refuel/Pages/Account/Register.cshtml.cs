@@ -60,6 +60,12 @@ namespace Refuel.Pages.Account
 
             if (ModelState.IsValid)
             {
+                if (Input.Password.Length < 8)
+                {
+                    FormError = "Hasło musi zawierać przynajmniej 8 znaków!";
+                    return Page();
+                }
+
                 if (Input.Password != Input.Password2)
                 {
                     FormError = "Hasła różnią się od siebie!";
