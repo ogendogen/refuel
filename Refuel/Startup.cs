@@ -41,6 +41,7 @@ namespace Refuel
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IEmailManager, EmailManager>();
 
+            services.AddControllers();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddOptions();
@@ -94,6 +95,7 @@ namespace Refuel
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
