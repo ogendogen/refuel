@@ -37,14 +37,16 @@ namespace Database
                 entity.Property(e => e.Login).IsRequired().HasMaxLength(20);
                 entity.HasIndex(e => e.Login).IsUnique();
 
-                entity.Property(e => e.Password).IsRequired().HasMaxLength(64);
-                entity.Property(e => e.Salt).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.Password).HasMaxLength(64);
+                entity.Property(e => e.Salt).HasMaxLength(20);
                 
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(64);
                 entity.HasIndex(e => e.Email).IsUnique();
 
                 entity.Property(e => e.RegisterDate).IsRequired();
                 entity.Property(e => e.VerificationCode).IsRequired().HasMaxLength(32).HasDefaultValue("0");
+
+                entity.Property(e => e.ExternalProvider).HasMaxLength(32);
 
                 entity.HasMany(e => e.Vehicles)
                     .WithOne(e => e.Owner);
