@@ -9,5 +9,6 @@ namespace Refuel
     {
         public string EmailPassword { get; set; }
         public string RecaptchaSecretKey { get; set; }
+        public string GoogleSecretKey { get; set; }
     }
 }

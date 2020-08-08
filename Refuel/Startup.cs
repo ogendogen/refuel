@@ -41,9 +41,6 @@ namespace Refuel
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IEmailManager, EmailManager>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
-
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddMvc();
@@ -52,6 +49,17 @@ namespace Refuel
             services.Configure<Passwords>(Configuration.GetSection("Passwords"));
             services.Configure<Recaptcha>(Configuration.GetSection("Recaptcha"));
             services.Configure<GoogleAuth>(Configuration.GetSection("GoogleAuth"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie()
+                .AddGoogle(options =>
+                {
+                    Passwords passwords = Configuration.GetSection("Passwords").Get<Passwords>();
+                    GoogleAuth googleAuth = Configuration.GetSection("GoogleAuth").Get<GoogleAuth>();
+
+                    options.ClientId = googleAuth.SiteKey;
+                    options.ClientSecret = passwords.GoogleSecretKey;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
