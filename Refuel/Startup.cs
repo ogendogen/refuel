@@ -43,9 +43,6 @@ namespace Refuel
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddMvc();
-            services.AddRazorPages();
-
             services.AddOptions();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<Passwords>(Configuration.GetSection("Passwords"));
@@ -62,6 +59,9 @@ namespace Refuel
                     options.ClientId = googleAuth.SiteKey;
                     options.ClientSecret = passwords.GoogleSecretKey;
                 });
+
+            services.AddMvc();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
