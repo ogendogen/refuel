@@ -44,6 +44,8 @@ namespace Refuel
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddMvc();
+            services.AddRazorPages();
+
             services.AddOptions();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.Configure<Passwords>(Configuration.GetSection("Passwords"));

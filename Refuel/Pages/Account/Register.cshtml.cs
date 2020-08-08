@@ -8,6 +8,7 @@ using Database;
 using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Models;
@@ -23,6 +24,7 @@ namespace Refuel.Pages.Account
         private readonly IOptions<EmailSettings> _settings;
         private readonly IOptions<Passwords> _passwords;
         private readonly IOptions<Recaptcha> _recaptcha;
+        private readonly IOptions<GoogleAuth> _googleAuth;
 
         public string FormError { get; set; }
         public string FormSuccess { get; set; }
@@ -34,24 +36,28 @@ namespace Refuel.Pages.Account
             IEmailManager emailManager, 
             IOptions<EmailSettings> settings,
             IOptions<Passwords> passwords,
-            IOptions<Recaptcha> recaptcha)
+            IOptions<Recaptcha> recaptcha,
+            IOptions<GoogleAuth> googleAuth)
         {
             _usersManager = usersManager;
             _emailManager = emailManager;
             _settings = settings;
             _passwords = passwords;
             _recaptcha = recaptcha;
+            _googleAuth = googleAuth;
 
             RecaptchaSiteKey = _recaptcha.Value.SiteKey;
         }
 
         public void OnGet()
         {
-
+            ViewData["GoogleKey"] = _googleAuth.Value.SiteKey;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            ViewData["GoogleKey"] = _googleAuth.Value.SiteKey;
+
             if (ModelState.IsValid)
             {
                 if (Input.Password != Input.Password2)
