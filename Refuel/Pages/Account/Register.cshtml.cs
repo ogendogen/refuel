@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Models;
 using Newtonsoft.Json.Linq;
+using Refuel.POCOs;
 using Utils;
 
 namespace Refuel.Pages.Account
