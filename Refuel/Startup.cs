@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Database;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +62,10 @@ namespace Refuel
 
                     options.ClientId = googleAuth.SiteKey;
                     options.ClientSecret = passwords.GoogleSecretKey;
+
+                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "UserId");
+                    options.ClaimActions.MapJsonKey(ClaimTypes.Email, "EmailAddress", ClaimValueTypes.Email);
+                    options.ClaimActions.MapJsonKey(ClaimTypes.Name, "Name");
                 });
 
             services.AddMvc();
