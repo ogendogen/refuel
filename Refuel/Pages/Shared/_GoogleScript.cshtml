@@ -22,16 +22,6 @@
 
     function sendPost() {
 
-        //$.post('https://localhost:5001/GoogleAuth/auth/google', { token: id_token },
-        //    function (msg) {
-        //        if (msg.status === "ok") {
-        //            window.location.href = "/Panel/Index"
-        //        }
-        //        else {
-        //            signOut();
-        //        }
-        //    });
-
         $.ajax({
             type: 'POST',
             url: '/GoogleAuth/auth/google',
@@ -48,9 +38,6 @@
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-            error: function (msg) {
-                alert("error" + msg);
             },
             async: true
         });
