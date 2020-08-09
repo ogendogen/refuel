@@ -8,6 +8,9 @@ using Database;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System;
+using System.Net.Http;
+using Refuel.POCOs;
 
 namespace Refuel.APIControllers
 {
@@ -25,45 +28,47 @@ namespace Refuel.APIControllers
         }
 
         [HttpPost("auth/google")]
-        public async Task<JsonResult> GoogleLogin(string token)
+        public async Task<GoogleAuthAPIResponse> GoogleLogin(string token)
         {
-            string url = $"https://oauth2.googleapis.com/tokeninfo?id_token={token}";
-            JObject jObject = new JObject();
-
-            using (WebClient webClient = new WebClient())
+            if (String.IsNullOrEmpty(token))
             {
-                string googleResponse = webClient.DownloadString(url);
-                JObject googleObject = JObject.Parse(googleResponse);
+                return new GoogleAuthAPIResponse() { Status = "missing param" };
+            }
+            
+            HttpClient httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(new Uri($"https://oauth2.googleapis.com/tokeninfo?id_token={token}"));
+            if (!response.IsSuccessStatusCode)
+            {
+                return new GoogleAuthAPIResponse() { Status = "error" };
+            }
 
-                if (googleObject.ContainsKey("error"))
-                {
-                    jObject.Add("status", "error");
-                }
-                else if (googleObject.ContainsKey("email") && googleObject.ContainsKey("name"))
-                {
-                    var user = await _usersManager.RegisterOrLoginGoogleUser(googleObject["name"].ToString(), googleObject["email"].ToString());
+            var googleResponse = await response.Content.ReadAsStringAsync();
+            JObject googleObject = JObject.Parse(googleResponse);
 
-                    var claims = new List<Claim>
+            if (googleObject.ContainsKey("email") && googleObject.ContainsKey("name"))
+            {
+                var user = await _usersManager.RegisterOrLoginGoogleUser(googleObject["name"].ToString(), googleObject["email"].ToString());
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Login),
+                    new Claim(ClaimTypes.Email, user.Email)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
                     {
-                        new Claim(ClaimTypes.Name, user.Login),
-                        new Claim(ClaimTypes.Email, user.Email)
-                    };
-
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity),
-                        new AuthenticationProperties
-                        {
-                            IsPersistent = true
-                        });
+                        IsPersistent = true
+                    });
 
                     
-                    jObject.Add("status", "ok");
-                }
-
-                return new JsonResult(jObject);
+                return new GoogleAuthAPIResponse() { Status = "ok" };
             }
+
+            return new GoogleAuthAPIResponse() { Status = "unknown" };
         }
     }
 }
