@@ -52,7 +52,8 @@ namespace Refuel.Pages.Account
 
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Login)
+                    new Claim(ClaimTypes.Name, user.Login),
+                    new Claim(ClaimTypes.Email, user.Email)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

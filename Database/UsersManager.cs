@@ -14,12 +14,10 @@ namespace Database
     public class UsersManager : IUsersManager
     {
         private readonly RefuelContext ctx;
-        private readonly RandomNumberGenerator rng;
 
         public UsersManager(RefuelContext refuelContext)
         {
             ctx = refuelContext;
-            rng = RNGCryptoServiceProvider.Create();
         }
 
         public async Task<User> Authenticate(string login, string password)
@@ -30,7 +28,7 @@ namespace Database
                 return null;
             }
             string hashed = HashPassword(password, salt);
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == hashed);
+            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == hashed && String.IsNullOrEmpty(user.ExternalProvider));
         }
 
         public int SaveChanges()
@@ -116,6 +114,27 @@ namespace Database
             }
 
             return await ctx.SaveChangesAsync();
+        }
+
+        public async Task<User> RegisterOrLoginGoogleUser(string login, string email)
+        {
+            var dbUser = await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Email == email && user.ExternalProvider == "google");
+            if (dbUser != null)
+            {
+                return dbUser;
+            }
+
+            var entityUser = await ctx.Users.AddAsync(new User()
+            {
+                Login = login,
+                Email = email,
+                RegisterDate = DateTime.Now,
+                VerificationCode = "0",
+                ExternalProvider = "google"
+            });
+            await ctx.SaveChangesAsync();
+
+            return entityUser.Entity;
         }
     }
 }
