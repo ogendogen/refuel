@@ -28,7 +28,7 @@ namespace Refuel.APIControllers
         }
 
         [HttpPost("auth/google")]
-        public async Task<GoogleAuthAPIResponse> GoogleLogin(string token)
+        public async Task<GoogleAuthAPIResponse> GoogleLogin([FromBody] string token)
         {
             if (String.IsNullOrEmpty(token))
             {
