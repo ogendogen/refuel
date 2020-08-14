@@ -1,12 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-@if (ViewData.ContainsKey("GoogleKey"))
-{
-    <meta name="google-signin-client_id" content="@ViewData["GoogleKey"]" />
-}
+    <meta name="google-signin-client_id" content="@Configuration.GetSection("GoogleAuth")["SiteKey"]" />
+    <partial name="_GoogleScript" />
+    <partial name="_GoogleFunctions" />
     <title>@ViewData["Title"] - Refuel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />

@@ -2,7 +2,7 @@
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <form class="form-inline" asp-page="/Account/Logout" method="post">
+            <form class="form-inline" asp-page="/Account/Logout" method="post" onsubmit="signOut()">
                 <button type="submit" class="nav-link text-dark btn btn-link">Logout @User.Identity.Name</button>
             </form>
         </li>
