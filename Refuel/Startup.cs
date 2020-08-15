@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Database;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,14 +13,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Refuel.POCOs;
+using Utils;
 
 namespace Refuel
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.secrets.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,7 +36,39 @@ namespace Refuel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RefuelContext>();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Panel");
+            });
 
+            services.AddScoped<IUsersManager, UsersManager>();
+            services.AddScoped<IEmailManager, EmailManager>();
+
+            services.AddControllers();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddOptions();
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<Passwords>(Configuration.GetSection("Passwords"));
+            services.Configure<Recaptcha>(Configuration.GetSection("Recaptcha"));
+            services.Configure<GoogleAuth>(Configuration.GetSection("GoogleAuth"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie()
+                .AddGoogle(options =>
+                {
+                    Passwords passwords = Configuration.GetSection("Passwords").Get<Passwords>();
+                    GoogleAuth googleAuth = Configuration.GetSection("GoogleAuth").Get<GoogleAuth>();
+
+                    options.ClientId = googleAuth.SiteKey;
+                    options.ClientSecret = passwords.GoogleSecretKey;
+
+                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "UserId");
+                    options.ClaimActions.MapJsonKey(ClaimTypes.Email, "EmailAddress", ClaimValueTypes.Email);
+                    options.ClaimActions.MapJsonKey(ClaimTypes.Name, "Name");
+                });
+
+            services.AddMvc();
             services.AddRazorPages();
         }
 
@@ -47,13 +89,20 @@ namespace Refuel
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict
+            });
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

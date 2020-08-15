@@ -3,14 +3,16 @@ using System;
 using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
     [DbContext(typeof(RefuelContext))]
-    partial class RefuelContextModelSnapshot : ModelSnapshot
+    [Migration("20200726210835_UniqueEmail")]
+    partial class UniqueEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,16 +67,13 @@ namespace Database.Migrations
                         .HasColumnType("varchar(64) CHARACTER SET utf8mb4")
                         .HasMaxLength(64);
 
-                    b.Property<string>("ExternalProvider")
-                        .HasColumnType("varchar(32) CHARACTER SET utf8mb4")
-                        .HasMaxLength(32);
-
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("varchar(64) CHARACTER SET utf8mb4")
                         .HasMaxLength(64);
 
@@ -82,15 +81,9 @@ namespace Database.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Salt")
+                        .IsRequired()
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
-
-                    b.Property<string>("VerificationCode")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(32) CHARACTER SET utf8mb4")
-                        .HasMaxLength(32)
-                        .HasDefaultValue("0");
 
                     b.HasKey("ID");
 

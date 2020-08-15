@@ -12,6 +12,8 @@ namespace Database.Models
         public string Salt { get; set; }
         public string Email { get; set; }
         public DateTime RegisterDate { get; set; }
+        public string VerificationCode { get; set; }
+        public string ExternalProvider { get; set; }
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
         public User()
