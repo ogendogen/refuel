@@ -38,7 +38,7 @@ namespace Refuel
             services.AddDbContext<RefuelContext>();
             services.AddRazorPages(options =>
             {
-                options.Conventions.AuthorizeFolder("/Areas/Panel");
+                options.Conventions.AuthorizeAreaFolder("Panel", "/");
             });
 
             services.AddScoped<IUsersManager, UsersManager>();
