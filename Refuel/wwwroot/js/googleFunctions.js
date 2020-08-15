@@ -4,13 +4,18 @@ onLoad();
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     id_token = googleUser.getAuthResponse().id_token;
+    localStorage.setItem("idtoken", id_token);
     console.log(id_token);
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
-    verifyIdToken();
+    redirectToGoogleDelay();
+}
+
+function redirectToGoogleDelay() {
+    window.location.href = "/Account/GoogleDelay";
 }
 
 function signOut() {
@@ -33,6 +38,7 @@ function onSuccess(data) {
 function onLoad() {
     gapi.load('auth2', function () {
         gapi.auth2.init();
+        renderButton();
     });
 }
 
@@ -40,7 +46,7 @@ function verifyIdToken() {
     $.ajax({
         type: 'POST',
         url: '/GoogleAuth/auth/google',
-        data: JSON.stringify(id_token),
+        data: JSON.stringify(localStorage.getItem("idtoken")),
         dataType: 'json',
         success: function (data) {
             onSuccess(data);
@@ -51,4 +57,20 @@ function verifyIdToken() {
         },
         async: true
     });
+}
+
+function renderButton() {
+    gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSignIn,
+        'onfailure': onFailure
+    });
+}
+
+function onFailure(error) {
+    console.log(error);
 }

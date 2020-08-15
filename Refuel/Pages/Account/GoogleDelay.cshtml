@@ -1,0 +1,12 @@
+﻿@page
+@model Refuel.Pages.Account.GoogleDelayModel
+@{
+}
+
+<h2>Weryfikacja konta Google</h2>
+<span class="font-weight-bold">Proszę czekać...</span>
+<script>
+    $(document).ready(function () {
+        verifyIdToken();
+    });
+</script>
