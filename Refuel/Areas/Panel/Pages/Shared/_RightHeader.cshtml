@@ -1,0 +1,26 @@
+﻿<div class="header-right">
+    <div class="dashboard-setting user-notification">
+        <div class="dropdown">
+            <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
+                <i class="dw dw-settings2"></i>
+            </a>
+        </div>
+    </div>
+    <partial name="_Notifications" />
+    <div class="user-info-dropdown">
+        <div class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                <span class="user-icon">
+                    <img src="/vendors/images/photo1.jpg" alt="">
+                </span>
+                <span class="user-name">@User.Claims.First(claim => claim.Type.Contains("name")).Value </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                <a class="dropdown-item" asp-page="/Account/Logout" onsubmit="signOut()"><i class="dw dw-logout"></i> Wyloguj się</a>
+            </div>
+        </div>
+    </div>
+    <div class="github-link">
+        <a href="https://github.com/dropways/deskapp" target="_blank"><img src="/vendors/images/github.svg" alt=""></a>
+    </div>
+</div>
