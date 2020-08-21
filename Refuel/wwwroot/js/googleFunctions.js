@@ -23,12 +23,13 @@ function signOut() {
     auth2.disconnect();
     auth2.signOut().then(function () {
         console.log('User signed out.');
+        window.location.href = "/Account/Logout";
     });
 }
 
 function onSuccess(data) {
     if (data.status === "ok") {
-        window.location.href = "../Panel/Index"
+        window.location.href = "../Panel/Index";
     }
     else {
         signOut();

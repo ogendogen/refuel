@@ -13,21 +13,11 @@ namespace Refuel.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        public IActionResult OnGet()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToPage("/Index");
-            }
-
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGet()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToPage("/Account/Logout");
+            return Page();
         }
     }
 }
