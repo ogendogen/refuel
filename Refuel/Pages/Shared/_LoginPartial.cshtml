@@ -1,5 +1,10 @@
-﻿<ul class="navbar-nav">
-    @if (User.Identity.IsAuthenticated)
+﻿@{
+    string controllerName = Url.ActionContext.ActionDescriptor.DisplayName;
+    bool isLoggedIn = User.Identity.IsAuthenticated;
+}
+
+<ul class="navbar-nav">
+    @if (isLoggedIn && !controllerName.Contains("Logout"))
     {
         <li class="nav-item">
             <form class="form-inline" asp-page="/Account/Logout" method="post" onsubmit="signOut()">
