@@ -66,6 +66,60 @@ namespace Database
             return collection;
         }
 
+        public decimal GetPriceForNKilometers(Vehicle vehicle, int kilometers = 100)
+        {
+            var summedTotalPrices = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
+                .Select(refuel => refuel.TotalPrice)
+                .Sum(x => x);
+
+            var summedKilometers = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
+                .Select(refuel => refuel.Kilometers)
+                .Sum(x => x);
+
+            return (summedTotalPrices * kilometers) / summedKilometers;
+        }
+
+        public decimal GetPriceForNKilometers(Vehicle vehicle, FuelType fuelType, int kilometers = 100)
+        {
+            var summedTotalPrices = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
+                .Select(refuel => refuel.TotalPrice)
+                .Sum(x => x);
+
+            var summedKilometers = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
+                .Select(refuel => refuel.Kilometers)
+                .Sum(x => x);
+
+            return (summedTotalPrices * kilometers) / summedKilometers;
+        }
+
+        public decimal GetTotalCost(Vehicle vehicle)
+        {
+            return _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
+                .Select(refuel => refuel.TotalPrice)
+                .Sum(x => x);
+        }
+
+        public decimal GetTotalCost(Vehicle vehicle, FuelType fuelType)
+        {
+            return _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
+                .Select(refuel => refuel.TotalPrice)
+                .Sum(x => x);
+        }
+
+        public decimal GetVehicleAverageCombustion(Vehicle vehicle)
+        {
+            return _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
+                .Select(refuel => refuel.Combustion)
+                .Average();
+        }
+
+        public decimal GetVehicleAverageCombustion(Vehicle vehicle, FuelType fuelType)
+        {
+            return _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
+                .Select(refuel => refuel.Combustion)
+                .Average();
+        }
+
         public int SaveChanges()
         {
             return _ctx.SaveChanges();

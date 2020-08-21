@@ -13,5 +13,11 @@ namespace Database
         Task<int> Delete(Vehicle vehicle);
         IEnumerable<Refuel> GetAllVehicleRefuelsSortedDescendingByDate(Vehicle vehicle);
         int SaveChanges();
+        decimal GetVehicleAverageCombustion(Vehicle vehicle);
+        decimal GetVehicleAverageCombustion(Vehicle vehicle, FuelType fuelType);
+        decimal GetPriceForNKilometers(Vehicle vehicle, int kilometers = 100);
+        decimal GetPriceForNKilometers(Vehicle vehicle, FuelType fuelType, int kilometers = 100);
+        decimal GetTotalCost(Vehicle vehicle);
+        decimal GetTotalCost(Vehicle vehicle, FuelType fuelType);
     }
 }
