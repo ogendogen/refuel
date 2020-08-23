@@ -43,6 +43,7 @@ namespace Refuel
 
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IEmailManager, EmailManager>();
+            services.AddSingleton<IDictionaryService, DictionaryService>();
 
             services.AddControllers();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

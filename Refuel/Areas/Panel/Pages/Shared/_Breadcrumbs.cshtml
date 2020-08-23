@@ -1,4 +1,10 @@
 ﻿@{
+    @using Microsoft.Extensions.DependencyInjection
+    @using Utils
+    @inject IDictionaryService DictionaryService
+
+    DictionaryService = new DictionaryService();
+
     string urlPath = Url.ActionContext.ActionDescriptor.DisplayName;
     List<string> elements = urlPath.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
 }
@@ -34,10 +40,10 @@
 
                         foreach (var element in elements)
                         {
-                            <li class="breadcrumb-item"><a asp-page="/@element/Index">@element</a></li>
+                            <li class="breadcrumb-item"><a asp-page="/@element/Index">@DictionaryService.GetBreadcrumbsTranslation(@element)</a></li>
                         }
 
-                        <li class="breadcrumb-item active"><a asp-page="urlPath">@action</a></li>
+                        <li class="breadcrumb-item active"><a asp-page="urlPath">@DictionaryService.GetBreadcrumbsTranslation(@action)</a></li>
                     }
                 }
             </ol>
