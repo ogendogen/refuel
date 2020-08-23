@@ -1,0 +1,27 @@
+﻿@using Refuel.POCOs
+@model IEnumerable<Breadcrumb>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="title">
+            <h4>Nawigacja</h4>
+        </div>
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                @{
+                    foreach (var breadcrumb in Model)
+                    {
+                        if (breadcrumb.IsActive)
+                        {
+                            <li class="breadcrumb-item active"><a asp-page="@breadcrumb.Page">@breadcrumb.Content</a></li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item"><a asp-page="@breadcrumb.Page">@breadcrumb.Content</a></li>
+                        }
+                    }
+                }
+            </ol>
+        </nav>
+    </div>
+</div>
