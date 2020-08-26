@@ -12,6 +12,8 @@
                 <th scope="col">No.</th>
                 <th scope="col">Firma</th>
                 <th scope="col">Model</th>
+                <th scope="col">Pojemność silnika</th>
+                <th scope="col">Konie mechaniczne</th>
                 <th scope="col">Opis</th>
                 <th scope="col">Akcje</th>
             </tr>
@@ -23,6 +25,8 @@
                     <th scope="row">@(++i)</th>
                     <td>@vehicle.Manufacturer</td>
                     <td>@vehicle.Model</td>
+                    <td>@vehicle.Engine</td>
+                    <td>@vehicle.Horsepower</td>
                     <td>@(vehicle.Description.Length > descriptionLimit ? vehicle.Description.Substring(descriptionLimit) + "..." : vehicle.Description)</td>
                     <td>Akcja...</td>
                 </tr>
