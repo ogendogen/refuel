@@ -68,6 +68,7 @@ namespace Utils.Properties {
         ///      &lt;item key=&quot;Vehicles&quot;&gt;Pojazdy&lt;/item&gt;
         ///      &lt;item key=&quot;Refuels&quot;&gt;Tankowania&lt;/item&gt;
         ///      &lt;item key=&quot;Add&quot;&gt;Dodawanie&lt;/item&gt;
+        ///      &lt;item key=&quot;Details&quot;&gt;Szczegóły&lt;/item&gt;
         ///      &lt;item key=&quot;Edit&quot;&gt;Edycja&lt;/item&gt;
         ///      &lt;item key=&quot;Delete&quot;&gt;Usuwanie&lt;/item&gt;
         ///    &lt;/items&gt;

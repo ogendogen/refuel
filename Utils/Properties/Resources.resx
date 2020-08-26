@@ -125,6 +125,7 @@
       &lt;item key="Vehicles"&gt;Pojazdy&lt;/item&gt;
       &lt;item key="Refuels"&gt;Tankowania&lt;/item&gt;
       &lt;item key="Add"&gt;Dodawanie&lt;/item&gt;
+      &lt;item key="Details"&gt;Szczegóły&lt;/item&gt;
       &lt;item key="Edit"&gt;Edycja&lt;/item&gt;
       &lt;item key="Delete"&gt;Usuwanie&lt;/item&gt;
     &lt;/items&gt;
