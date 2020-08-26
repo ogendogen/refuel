@@ -2,28 +2,31 @@
 @model List<Vehicle>
 @{
     int i = 0;
+    int descriptionLimit = 30;
 }
 
-<table class="table table-responsive table-striped">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Firma</th>
-            <th>Model</th>
-            <th>Opis</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Vehicle vehicle in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@(++i)</td>
-                <td>@vehicle.Manufacturer</td>
-                <td>@vehicle.Model</td>
-                <td>@(vehicle.Description.Length > 20 ? vehicle.Description.Substring(20) + "..." : vehicle.Description)</td>
-                <td>Akcja...</td>
+                <th scope="col">No.</th>
+                <th scope="col">Firma</th>
+                <th scope="col">Model</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcje</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (Vehicle vehicle in Model)
+            {
+                <tr>
+                    <th scope="row">@(++i)</th>
+                    <td>@vehicle.Manufacturer</td>
+                    <td>@vehicle.Model</td>
+                    <td>@(vehicle.Description.Length > descriptionLimit ? vehicle.Description.Substring(descriptionLimit) + "..." : vehicle.Description)</td>
+                    <td>Akcja...</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
