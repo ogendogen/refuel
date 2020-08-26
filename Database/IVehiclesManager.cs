@@ -19,5 +19,6 @@ namespace Database
         decimal GetPriceForNKilometers(Vehicle vehicle, FuelType fuelType, int kilometers = 100);
         decimal GetTotalCost(Vehicle vehicle);
         decimal GetTotalCost(Vehicle vehicle, FuelType fuelType);
+        string GetVehicleManufacturerAndModelById(string value);
     }
 }

@@ -120,6 +120,17 @@ namespace Database
                 .Average();
         }
 
+        public string GetVehicleManufacturerAndModelById(string id)
+        {
+            if (!Int32.TryParse(id, out int i_id))
+            {
+                return String.Empty;
+            }
+            
+            var vehicle = _ctx.Vehicles.FirstOrDefault(vehicle => vehicle.ID == i_id);
+            return $"{vehicle.Manufacturer} {vehicle.Model}";
+        }
+
         public int SaveChanges()
         {
             return _ctx.SaveChanges();

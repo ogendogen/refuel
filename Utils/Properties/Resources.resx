@@ -128,6 +128,7 @@
       &lt;item key="Details"&gt;Szczegóły&lt;/item&gt;
       &lt;item key="Edit"&gt;Edycja&lt;/item&gt;
       &lt;item key="Delete"&gt;Usuwanie&lt;/item&gt;
+      &lt;item key="vehicleId"&gt;Pojazd&lt;/item&gt;
     &lt;/items&gt;
   &lt;/breadcrumbs&gt;
 &lt;/dictionary&gt;</value>

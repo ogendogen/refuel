@@ -71,6 +71,7 @@ namespace Utils.Properties {
         ///      &lt;item key=&quot;Details&quot;&gt;Szczegóły&lt;/item&gt;
         ///      &lt;item key=&quot;Edit&quot;&gt;Edycja&lt;/item&gt;
         ///      &lt;item key=&quot;Delete&quot;&gt;Usuwanie&lt;/item&gt;
+        ///      &lt;item key=&quot;vehicleId&quot;&gt;Pojazd&lt;/item&gt;
         ///    &lt;/items&gt;
         ///  &lt;/breadcrumbs&gt;
         ///&lt;/dictionary&gt;.
