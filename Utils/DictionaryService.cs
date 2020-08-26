@@ -24,7 +24,7 @@ namespace Utils
         public string GetBreadcrumbsTranslation(string item, string language = "pl")
         {
             var node = Dictionary.SelectSingleNode($"/dictionary/breadcrumbs/items[@lang='{language}']/item[@key='{item}']");
-            return node.InnerText;
+            return node?.InnerText ?? "***Missing***";
         }
     }
 }
