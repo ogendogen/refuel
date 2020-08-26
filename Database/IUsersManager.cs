@@ -17,5 +17,6 @@ namespace Database
         Task<bool> IsUsersEmailVerified(User user);
         Task<int> VerifyUser(int id, string verificationCode);
         Task<User> RegisterOrLoginGoogleUser(string login, string email);
+        List<Vehicle> GetUserAllVehicles(int userId);
     }
 }

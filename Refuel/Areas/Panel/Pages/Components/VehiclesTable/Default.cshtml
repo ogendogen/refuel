@@ -1,0 +1,29 @@
+﻿@using Database.Models
+@model List<Vehicle>
+@{
+    int i = 0;
+}
+
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Firma</th>
+            <th>Model</th>
+            <th>Opis</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Vehicle vehicle in Model)
+        {
+            <tr>
+                <td>@(++i)</td>
+                <td>@vehicle.Manufacturer</td>
+                <td>@vehicle.Model</td>
+                <td>@(vehicle.Description.Length > 20 ? vehicle.Description.Substring(20) + "..." : vehicle.Description)</td>
+                <td>Akcja...</td>
+            </tr>
+        }
+    </tbody>
+</table>
