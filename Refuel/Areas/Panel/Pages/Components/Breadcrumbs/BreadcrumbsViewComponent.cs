@@ -150,13 +150,6 @@ namespace Refuel.Components.Breadcrumbs
             }
             else
             {
-                ReadyElements.Add(new Breadcrumb()
-                {
-                    Page = urlPath,
-                    Content = _dictionaryService.GetBreadcrumbsTranslation(action),
-                    IsActive = false
-                });
-
                 foreach (Parameter parameter in parameters)
                 {
                     ReadyElements.Add(new Breadcrumb()
