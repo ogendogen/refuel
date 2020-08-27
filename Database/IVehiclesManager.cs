@@ -20,5 +20,6 @@ namespace Database
         decimal GetTotalCost(Vehicle vehicle);
         decimal GetTotalCost(Vehicle vehicle, FuelType fuelType);
         string GetVehicleManufacturerAndModelById(string value);
+        Task<int> GetVehicleOwnerId(int vehicleId);
     }
 }

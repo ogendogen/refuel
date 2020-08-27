@@ -12,6 +12,6 @@
 </div>
 <div class="row marginTop20">
     <div class="col-md-12">
-        <vc:vehicles-table user-id="1" />
+        <vc:vehicles-table user-id="@Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value)" />
     </div>
 </div>

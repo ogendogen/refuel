@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
@@ -129,6 +130,14 @@ namespace Database
             
             var vehicle = _ctx.Vehicles.FirstOrDefault(vehicle => vehicle.ID == i_id);
             return $"{vehicle.Manufacturer} {vehicle.Model}";
+        }
+
+        public async Task<int> GetVehicleOwnerId(int vehicleId)
+        {
+            var vehicle = await _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .FirstOrDefaultAsync(vehicle => vehicle.ID == vehicleId);
+
+            return vehicle.Owner.ID;
         }
 
         public int SaveChanges()

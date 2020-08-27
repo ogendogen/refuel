@@ -65,7 +65,7 @@ namespace Refuel
                     options.ClientId = googleAuth.SiteKey;
                     options.ClientSecret = passwords.GoogleSecretKey;
 
-                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "UserId");
+                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "ID");
                     options.ClaimActions.MapJsonKey(ClaimTypes.Email, "EmailAddress", ClaimValueTypes.Email);
                     options.ClaimActions.MapJsonKey(ClaimTypes.Name, "Name");
                 });
