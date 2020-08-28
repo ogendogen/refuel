@@ -1,11 +1,11 @@
 ﻿@page
 @model Refuel.Areas.Panel.Pages.Vehicles.DetailsModel
 @{
-    
+    bool isCorrect = (bool)ViewData["isCorrect"];
 }
 
 <h2>Vehicle details</h2>
-@if((bool)ViewData["isCorrect"])
+@if(isCorrect)
 {
     <h3>Taadam, your vehicle!</h3>
 }
@@ -14,5 +14,5 @@ else
     <h3>This is not ur vehicle</h3>
 }
 <h5><s>TODO: Check if showing a car to proper owner</s></h5>
-<h5>TODO: fix ViewData bug</h5>
+<h5><s>TODO: fix ViewData bug</s></h5>
 <h5>TODO: add info about no cars</h5>

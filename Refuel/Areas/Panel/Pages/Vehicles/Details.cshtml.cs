@@ -16,14 +16,14 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
         {
             _vehiclesManager = vehiclesManager;
         }
-        public async void OnGet()
+        public void OnGet()
         {
             if (HttpContext.Request.Query.ContainsKey("vehicleId"))
             {
                 string vehicleId = HttpContext.Request.Query["vehicleId"];
                 if (Int32.TryParse(vehicleId, out int i_vehicleId))
                 {
-                    int ownerId = await _vehiclesManager.GetVehicleOwnerId(i_vehicleId);
+                    int ownerId = _vehiclesManager.GetVehicleOwnerId(i_vehicleId).Result;
                     int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
 
                     if (ownerId == userId)
