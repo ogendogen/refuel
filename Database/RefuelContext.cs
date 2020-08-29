@@ -64,10 +64,11 @@ namespace Database
                 entity.Property(e => e.Engine).IsRequired();
 
                 entity.Property(e => e.Horsepower).IsRequired();
-                entity.Property(e => e.Description).IsRequired();
+                entity.Property(e => e.Description).HasMaxLength(500);
 
                 entity.HasOne(e => e.Owner)
-                    .WithMany(e => e.Vehicles);
+                    .WithMany(e => e.Vehicles)
+                    .IsRequired();
 
                 entity.HasMany(e => e.Refuels)
                     .WithOne(e => e.Vehicle)
@@ -87,7 +88,8 @@ namespace Database
                 entity.Property(e => e.Fuel).IsRequired();
 
                 entity.HasOne(e => e.Vehicle)
-                    .WithMany(e => e.Refuels);
+                    .WithMany(e => e.Refuels)
+                    .IsRequired();
             });
 
             foreach (var property in modelBuilder.Model.GetEntityTypes()
