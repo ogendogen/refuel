@@ -11,6 +11,7 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
     {
         public void OnGet()
         {
+            
         }
     }
 }

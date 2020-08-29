@@ -19,6 +19,11 @@ namespace Refuel.Areas.Panel.Pages.Components.VehiclesTable
         public IViewComponentResult Invoke(int userId)
         {
             var userVehicles = _usersManager.GetUserAllVehicles(userId);
+            if (userVehicles.Count == 0)
+            {
+                return View("NoVehicles");
+            }
+
             return View("Default", userVehicles);
         }
     }
