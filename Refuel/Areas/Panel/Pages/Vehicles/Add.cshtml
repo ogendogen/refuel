@@ -3,4 +3,91 @@
 @{
 }
 
-<h2>Vehicles add goes here</h2>
+<h2>Dodawanie nowego pojazdu</h2>
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-2 col-form-label">
+                    <label asp-for="Input.Manufacturer">
+                        @Html.DisplayNameFor(model => model.Input.Manufacturer)
+                    </label>
+                </div>
+
+                <div class="col-sm-12 col-md-10">
+                    <input asp-for="Input.Manufacturer" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Input.Manufacturer" class="text-danger" />
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-2 col-form-label">
+                    <label asp-for="Input.Model">
+                        @Html.DisplayNameFor(model => model.Input.Model)
+                    </label>
+                </div>
+
+                <div class="col-sm-12 col-md-10">
+                    <input asp-for="Input.Model" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Input.Model" class="text-danger" />
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-2 col-form-label">
+                    <label asp-for="Input.Engine">
+                        @Html.DisplayNameFor(model => model.Input.Engine)
+                    </label>
+                </div>
+
+                <div class="col-sm-12 col-md-10">
+                    <input asp-for="Input.Engine" type="number" min="0.1" max="10" step="0.1" value="0.1" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Input.Engine" class="text-danger" />
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-2 col-form-label">
+                    <label asp-for="Input.HorsePower">
+                        @Html.DisplayNameFor(model => model.Input.HorsePower)
+                    </label>
+                </div>
+
+                <div class="col-sm-12 col-md-10">
+                    <input asp-for="Input.HorsePower" value="50" min="10" max="1000" step="1" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Input.HorsePower" class="text-danger" />
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-2 col-form-label">
+                    <label asp-for="Input.Description">
+                        @Html.DisplayNameFor(model => model.Input.Description)
+                    </label>
+                </div>
+
+                <div class="col-sm-12 col-md-10">
+                    <input asp-for="Input.Description" class="form-control" />
+                </div>
+
+                <span asp-validation-for="Input.Description" class="text-danger" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-success">
+                    Dodaj
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section ValidationScripts {
+    <partial name="_ValidationScriptsPartial" />
+}

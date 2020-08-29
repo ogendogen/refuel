@@ -1,6 +1,9 @@
 ﻿@page
 @model Refuel.Areas.Panel.Pages.Vehicles.IndexModel
 @addTagHelper *, Refuel
+@{
+    int userId = @Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+}
 
 <div class="row">
     <div class="col-md-6">
@@ -14,6 +17,6 @@
 </div>
 <div class="row marginTop20">
     <div class="col-md-12">
-        <vc:vehicles-table user-id="@Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value)" />
+        <vc:vehicles-table user-id="userId" />
     </div>
 </div>
