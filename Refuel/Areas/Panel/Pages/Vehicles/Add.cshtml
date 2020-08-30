@@ -6,7 +6,7 @@
 <h2>Dodawanie nowego pojazdu</h2>
 <div class="row marginTop20">
     <div class="col-md-12">
-        <form method="post">
+        <form method="post" id="addVehicleForm">
             <div asp-validation-summary="All" class="text-dark" />
 
             <div class="form-group row">
@@ -73,18 +73,21 @@
                 </div>
 
                 <div class="col-sm-12 col-md-10">
-                    <input asp-for="Input.Description" class="form-control" />
+                    <textarea asp-for="Input.Description" class="form-control"></textarea>
                 </div>
 
                 <span asp-validation-for="Input.Description" class="text-danger" />
             </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-success">
-                    Dodaj
-                </button>
-            </div>
         </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button type="submit" form="addVehicleForm" class="btn btn-primary btn-success" style="width: 100%;">
+                Dodaj
+            </button>
+        </div>
+        <div class="col-md-2"></div>
     </div>
 </div>
 
