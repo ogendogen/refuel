@@ -64,6 +64,11 @@ namespace Refuel.Components.Breadcrumbs
 
             foreach (var parameter in HttpContext.Request.Query)
             {
+                if (_dictionaryService.IsParameterKeyHidden(parameter.Key))
+                {
+                    continue;
+                }
+
                 string translatedKey = _dictionaryService.GetBreadcrumbsTranslation(parameter.Key);
                 string translatedValue = GetParameterReadableValue(parameter.Key, parameter.Value.ToString());
                 parameters.Add(new Parameter()

@@ -7,6 +7,7 @@ using Database;
 using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Refuel.Models;
 
@@ -29,7 +30,7 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
 
         }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
@@ -37,14 +38,10 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
                 User owner = await _usersManager.GetUserById(userId);
                 await _vehiclesManager.Add(Input.Manufacturer, Input.Model, Input.Engine, Input.HorsePower, Input.Description, owner);
 
-                ViewData["isSuccess"] = true;
-            }
-            else
-            {
-                ViewData["isSuccess"] = false;
+                return RedirectToPage("Index", new { status = "added" });
             }
 
-            // Todo: redirect to index and show alert for success
+            return RedirectToPage(".", new { status = "failed"});
         }
     }
 }

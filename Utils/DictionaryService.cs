@@ -26,5 +26,11 @@ namespace Utils
             var node = Dictionary.SelectSingleNode($"/dictionary/breadcrumbs/items[@lang='{language}']/item[@key='{item}']");
             return node?.InnerText ?? "***Missing***";
         }
+
+        public bool IsParameterKeyHidden(string key)
+        {
+            var node = Dictionary.SelectSingleNode($"/dictionary/breadcrumbs/hiddenitems[item='{key}']/item");
+            return node != null && !String.IsNullOrEmpty(node.InnerText);
+        }
     }
 }

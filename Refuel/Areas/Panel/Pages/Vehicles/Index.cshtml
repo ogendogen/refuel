@@ -3,6 +3,18 @@
 @addTagHelper *, Refuel
 @{
     int userId = @Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+    bool isAdded = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "added");
+}
+
+@if (isAdded)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd dodany poprawnie!
+            </div>
+        </div>
+    </div>
 }
 
 <div class="row">
@@ -11,7 +23,7 @@
     </div>
     <div class="col-md-6">
         <a asp-page="Add">
-            <input type="button" class="btn btn-success width-50-p float-right" value="Dodaj nowy"/>
+            <input type="button" class="btn btn-success width-50-p float-right" value="Dodaj nowy" />
         </a>
     </div>
 </div>

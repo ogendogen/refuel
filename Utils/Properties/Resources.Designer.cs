@@ -62,18 +62,21 @@ namespace Utils.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;dictionary&gt;
-        ///  &lt;breadcrumbs&gt;
-        ///    &lt;items lang=&quot;pl&quot;&gt;
-        ///      &lt;item key=&quot;Index&quot;&gt;Przegląd&lt;/item&gt;
-        ///      &lt;item key=&quot;Vehicles&quot;&gt;Pojazdy&lt;/item&gt;
-        ///      &lt;item key=&quot;Refuels&quot;&gt;Tankowania&lt;/item&gt;
-        ///      &lt;item key=&quot;Add&quot;&gt;Dodawanie&lt;/item&gt;
-        ///      &lt;item key=&quot;Details&quot;&gt;Szczegóły&lt;/item&gt;
-        ///      &lt;item key=&quot;Edit&quot;&gt;Edycja&lt;/item&gt;
-        ///      &lt;item key=&quot;Delete&quot;&gt;Usuwanie&lt;/item&gt;
-        ///      &lt;item key=&quot;vehicleId&quot;&gt;Pojazd&lt;/item&gt;
-        ///    &lt;/items&gt;
-        ///  &lt;/breadcrumbs&gt;
+        ///	&lt;breadcrumbs&gt;
+        ///		&lt;items lang=&quot;pl&quot;&gt;
+        ///			&lt;item key=&quot;Index&quot;&gt;Przegląd&lt;/item&gt;
+        ///			&lt;item key=&quot;Vehicles&quot;&gt;Pojazdy&lt;/item&gt;
+        ///			&lt;item key=&quot;Refuels&quot;&gt;Tankowania&lt;/item&gt;
+        ///			&lt;item key=&quot;Add&quot;&gt;Dodawanie&lt;/item&gt;
+        ///			&lt;item key=&quot;Details&quot;&gt;Szczegóły&lt;/item&gt;
+        ///			&lt;item key=&quot;Edit&quot;&gt;Edycja&lt;/item&gt;
+        ///			&lt;item key=&quot;Delete&quot;&gt;Usuwanie&lt;/item&gt;
+        ///			&lt;item key=&quot;vehicleId&quot;&gt;Pojazd&lt;/item&gt;
+        ///		&lt;/items&gt;
+        ///		&lt;hiddenitems&gt;
+        ///			&lt;item&gt;status&lt;/item&gt;
+        ///		&lt;/hiddenitems&gt;
+        ///	&lt;/breadcrumbs&gt;
         ///&lt;/dictionary&gt;.
         /// </summary>
         internal static string Dictionary {

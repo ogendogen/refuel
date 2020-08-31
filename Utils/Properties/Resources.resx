@@ -119,18 +119,21 @@
   </resheader>
   <data name="Dictionary" xml:space="preserve">
     <value>&lt;dictionary&gt;
-  &lt;breadcrumbs&gt;
-    &lt;items lang="pl"&gt;
-      &lt;item key="Index"&gt;Przegląd&lt;/item&gt;
-      &lt;item key="Vehicles"&gt;Pojazdy&lt;/item&gt;
-      &lt;item key="Refuels"&gt;Tankowania&lt;/item&gt;
-      &lt;item key="Add"&gt;Dodawanie&lt;/item&gt;
-      &lt;item key="Details"&gt;Szczegóły&lt;/item&gt;
-      &lt;item key="Edit"&gt;Edycja&lt;/item&gt;
-      &lt;item key="Delete"&gt;Usuwanie&lt;/item&gt;
-      &lt;item key="vehicleId"&gt;Pojazd&lt;/item&gt;
-    &lt;/items&gt;
-  &lt;/breadcrumbs&gt;
+	&lt;breadcrumbs&gt;
+		&lt;items lang="pl"&gt;
+			&lt;item key="Index"&gt;Przegląd&lt;/item&gt;
+			&lt;item key="Vehicles"&gt;Pojazdy&lt;/item&gt;
+			&lt;item key="Refuels"&gt;Tankowania&lt;/item&gt;
+			&lt;item key="Add"&gt;Dodawanie&lt;/item&gt;
+			&lt;item key="Details"&gt;Szczegóły&lt;/item&gt;
+			&lt;item key="Edit"&gt;Edycja&lt;/item&gt;
+			&lt;item key="Delete"&gt;Usuwanie&lt;/item&gt;
+			&lt;item key="vehicleId"&gt;Pojazd&lt;/item&gt;
+		&lt;/items&gt;
+		&lt;hiddenitems&gt;
+			&lt;item&gt;status&lt;/item&gt;
+		&lt;/hiddenitems&gt;
+	&lt;/breadcrumbs&gt;
 &lt;/dictionary&gt;</value>
     <comment>Dictionary with translations</comment>
   </data>
