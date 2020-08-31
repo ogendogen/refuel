@@ -1,23 +1,16 @@
 ﻿@page
 @model Refuel.Areas.Panel.Pages.Vehicles.AddModel
 @{
+    bool addFailure = HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "failed";
 }
 
-@if (ViewData.ContainsKey("isSuccess"))
+@if (addFailure)
 {
-    if ((bool)ViewData["isSuccess"])
-    {
-        <div class="alert alert-success">
-            Pojazd dodany poprawnie!
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-warning">
-            Pojazd nie dodany, zweryfikuj formularz
-        </div>
-    }
+    <div class="alert alert-warning">
+        Pojazd nie został dodany, zweryfikuj formularz
+    </div>
 }
+
 <h2>Dodawanie nowego pojazdu</h2>
 <div class="row marginTop20">
     <div class="col-md-12">
