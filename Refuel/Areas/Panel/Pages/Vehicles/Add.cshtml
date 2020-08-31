@@ -3,6 +3,21 @@
 @{
 }
 
+@if (ViewData.ContainsKey("isSuccess"))
+{
+    if ((bool)ViewData["isSuccess"])
+    {
+        <div class="alert alert-success">
+            Pojazd dodany poprawnie!
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Pojazd nie dodany, zweryfikuj formularz
+        </div>
+    }
+}
 <h2>Dodawanie nowego pojazdu</h2>
 <div class="row marginTop20">
     <div class="col-md-12">

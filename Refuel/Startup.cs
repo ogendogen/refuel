@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -106,6 +107,12 @@ namespace Refuel
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
     }
 }

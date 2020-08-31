@@ -141,5 +141,10 @@ namespace Database
         {
             return _ctx.Vehicles.Where(vehicle => vehicle.Owner.ID == userId).ToList();
         }
+
+        public async Task<User> GetUserById(int userId)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync(user => user.ID == userId);
+        }
     }
 }

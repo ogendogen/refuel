@@ -19,8 +19,8 @@ namespace Database
 
         public async Task<Vehicle> Add(string manufacturer, string model, decimal engine, int horsePower, string description, User owner)
         {
-            if (!String.IsNullOrEmpty(manufacturer) ||
-                !String.IsNullOrEmpty(model) ||
+            if (String.IsNullOrEmpty(manufacturer) ||
+                String.IsNullOrEmpty(model) ||
                 engine == 0.0M ||
                 horsePower == 0)
             {
