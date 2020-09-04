@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -36,6 +37,14 @@ namespace Utils
         public static string FromBase64(string input)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(input));
+        }
+
+        public static string GetUrlWithoutParameter(string urlPath)
+        {
+            List<string> parts = urlPath.Split('/').ToList();
+            parts.RemoveAt(parts.Count - 1);
+
+            return String.Join('/', parts);
         }
     }
 }

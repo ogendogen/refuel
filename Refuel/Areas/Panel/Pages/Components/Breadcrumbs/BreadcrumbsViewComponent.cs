@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -30,11 +31,9 @@ namespace Refuel.Components.Breadcrumbs
             string urlPath = Url.ActionContext.ActionDescriptor.DisplayName;
             List<string> elements = urlPath.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
 
-            List<Parameter> preparedParameters = new List<Parameter>();
-            if (HttpContext.Request.Query.Count > 0)
-            {
-                preparedParameters = GetParametersBreadcrumbs();
-            }
+            string fullPath = HttpContext.Request.Path;
+
+            Parameter parameter = GetParameterBreadcrumbs();
 
             int elementsAmount = elements.Count;
 
@@ -52,46 +51,39 @@ namespace Refuel.Components.Breadcrumbs
             }
             else if (elementsAmount > 1)
             {
-                AddHomeSectionsAndActionBreadcrumbs(urlPath, elements, preparedParameters);
+                AddHomeSectionsAndActionBreadcrumbs(fullPath, elements, parameter);
             }
 
             return View("Default", ReadyElements);
         }
 
-        private List<Parameter> GetParametersBreadcrumbs()
+        private Parameter GetParameterBreadcrumbs()
         {
-            List<Parameter> parameters = new List<Parameter>();
-
-            foreach (var parameter in HttpContext.Request.Query)
+            string path = HttpContext.Request.Path;
+            string[] parts = path.Split('/');
+            if (parts.Length >= 2 && Int32.TryParse(parts.Last(), out int id))
             {
-                if (_dictionaryService.IsParameterKeyHidden(parameter.Key))
-                {
-                    continue;
-                }
+                string translatedName = GetSectionTranslatedName(parts[2], parts.Last());
 
-                string translatedKey = _dictionaryService.GetBreadcrumbsTranslation(parameter.Key);
-                string translatedValue = GetParameterReadableValue(parameter.Key, parameter.Value.ToString());
-                parameters.Add(new Parameter()
+                return new Parameter()
                 {
-                    RawKey = parameter.Key,
-                    TranslatedKey = translatedKey,
-                    RawValue = parameter.Value,
-                    TranslatedValue = translatedValue
-                });
+                    TranslatedName = translatedName,
+                    DirectPath = path
+                };
             }
 
-            return parameters;
+            return null;
         }
 
-        private string GetParameterReadableValue(string key, string value)
+        private string GetSectionTranslatedName(string key, string value)
         {
             switch(key)
             {
-                case "vehicleId":
+                case "Vehicles":
                     return _vehicleManager.GetVehicleManufacturerAndModelById(value);
 
                 default:
-                    return value;
+                    return "*** SECTION NAME MISSING ***";
             }
         }
 
@@ -122,7 +114,7 @@ namespace Refuel.Components.Breadcrumbs
             });
         }
 
-        private void AddHomeSectionsAndActionBreadcrumbs(string urlPath, List<string> elements, List<Parameter> parameters)
+        private void AddHomeSectionsAndActionBreadcrumbs(string urlPath, List<string> elements, Parameter parameter)
         {
             ReadyElements.Add(new Breadcrumb()
             {
@@ -144,7 +136,23 @@ namespace Refuel.Components.Breadcrumbs
                 });
             }
 
-            if (parameters.Count == 0)
+            if (parameter != null)
+            {
+                ReadyElements.Add(new Breadcrumb()
+                {
+                    Page = Utils.Utils.GetUrlWithoutParameter(urlPath),
+                    Content = _dictionaryService.GetBreadcrumbsTranslation(action),
+                    IsActive = false
+                });
+
+                ReadyElements.Add(new Breadcrumb()
+                {
+                    Page = parameter.DirectPath,
+                    Content = parameter.TranslatedName,
+                    IsActive = true
+                });
+            }
+            else
             {
                 ReadyElements.Add(new Breadcrumb()
                 {
@@ -152,18 +160,6 @@ namespace Refuel.Components.Breadcrumbs
                     Content = _dictionaryService.GetBreadcrumbsTranslation(action),
                     IsActive = true
                 });
-            }
-            else
-            {
-                foreach (Parameter parameter in parameters)
-                {
-                    ReadyElements.Add(new Breadcrumb()
-                    {
-                        Page = $"{urlPath}?{parameter.RawKey}={parameter.RawValue}",
-                        Content = $"{parameter.TranslatedKey} {parameter.TranslatedValue}",
-                        IsActive = true
-                    });
-                }
             }
         }
     }
