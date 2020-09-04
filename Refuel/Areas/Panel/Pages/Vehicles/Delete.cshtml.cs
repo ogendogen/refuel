@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Database;
+using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,8 +12,32 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
 {
     public class DeleteModel : PageModel
     {
-        public void OnGet()
+        private readonly IVehiclesManager _vehiclesManager;
+
+        public string VehicleName { get; set; }
+        
+        public DeleteModel(IVehiclesManager vehiclesManager)
         {
+            _vehiclesManager = vehiclesManager;
+        }
+
+        public void OnGet(int vehicleId)
+        {
+            VehicleName = _vehiclesManager.GetVehicleManufacturerAndModelById(vehicleId.ToString());
+        }
+
+        public async Task<IActionResult> OnPostAsync(int vehicleId)
+        {
+            int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+            Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
+
+            if (vehicleId == vehicle.ID)
+            {
+                await _vehiclesManager.Delete(vehicle);
+                return RedirectToPage("Index", new { status = "deleted"});
+            }
+
+            return RedirectToPage("Index", new { status = "forbidden"});
         }
     }
 }

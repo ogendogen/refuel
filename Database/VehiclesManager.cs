@@ -130,6 +130,7 @@ namespace Database
 
         public string GetVehicleManufacturerAndModelById(string id)
         {
+            // todo: zmienić na int
             if (!Int32.TryParse(id, out int i_id))
             {
                 return String.Empty;

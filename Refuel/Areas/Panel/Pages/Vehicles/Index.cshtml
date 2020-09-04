@@ -6,6 +6,7 @@
     bool isAdded = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "added");
     bool isEdited = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "edited");
     bool isForbidden = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "forbidden");
+    bool isDeleted = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "deleted");
 }
 
 @if (isAdded)
@@ -24,6 +25,16 @@
         <div class="col-md-12">
             <div class="alert alert-success">
                 Pojazd został edytowany!
+            </div>
+        </div>
+    </div>
+}
+@if (isDeleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd został usunięty razem z jego historią!
             </div>
         </div>
     </div>
