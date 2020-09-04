@@ -4,6 +4,8 @@
 @{
     int userId = @Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
     bool isAdded = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "added");
+    bool isEdited = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "edited");
+    bool isForbidden = (HttpContext.Request.Query.ContainsKey("status") && HttpContext.Request.Query["status"] == "forbidden");
 }
 
 @if (isAdded)
@@ -12,6 +14,26 @@
         <div class="col-md-12">
             <div class="alert alert-success">
                 Pojazd dodany poprawnie!
+            </div>
+        </div>
+    </div>
+}
+@if (isEdited)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd został edytowany!
+            </div>
+        </div>
+    </div>
+}
+@if (isForbidden)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                Dany pojazd nie istnieje lub nie jesteś jego posiadaczem!
             </div>
         </div>
     </div>

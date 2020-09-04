@@ -3,47 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Database;
+using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Refuel.Models;
 
 namespace Refuel.Areas.Panel.Pages.Vehicles
 {
     public class DetailsModel : PageModel
     {
+        [BindProperty]
+        public InputVehicleModel Input { get; set; }
         private readonly IVehiclesManager _vehiclesManager;
 
         public DetailsModel(IVehiclesManager vehiclesManager)
         {
             _vehiclesManager = vehiclesManager;
         }
-        public void OnGet()
+        
+        public IActionResult OnGet(string vehicleId)
         {
-            if (HttpContext.Request.Query.ContainsKey("vehicleId"))
+            if (Int32.TryParse(vehicleId, out int i_vehicleId))
             {
-                string vehicleId = HttpContext.Request.Query["vehicleId"];
-                if (Int32.TryParse(vehicleId, out int i_vehicleId))
+                int? ownerId = _vehiclesManager.GetVehicleOwnerId(i_vehicleId).Result;
+                if (ownerId == null)
                 {
-                    int ownerId = _vehiclesManager.GetVehicleOwnerId(i_vehicleId).Result;
-                    int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+                    return RedirectToPage("Index");
+                }
 
-                    if (ownerId == userId)
-                    {
-                        ViewData["isCorrect"] = true;
-                    }
-                    else
-                    {
-                        ViewData["isCorrect"] = false;
-                    }
-                }
-                else
+                int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+
+                if (ownerId == userId)
                 {
-                    ViewData["isCorrect"] = false;
+                    Vehicle vehicle = _vehiclesManager.GetVehicleById(i_vehicleId);
+                    Input = new InputVehicleModel()
+                    {
+                        Model = vehicle.Model,
+                        Manufacturer = vehicle.Manufacturer,
+                        Engine = vehicle.Engine,
+                        Horsepower = vehicle.Horsepower,
+                        Description = vehicle.Description
+                    };
+
+                    return Page();
                 }
             }
-            else
-            {
-                ViewData["isCorrect"] = false;
-            }
+
+            return RedirectToPage("Index");
+        }
+
+        public IActionResult OnPost() // just in case
+        {
+            return Page();
         }
     }
 }

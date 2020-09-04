@@ -121,6 +121,13 @@ namespace Database
                 .Average();
         }
 
+        public Vehicle GetVehicleById(int i_vehicleId)
+        {
+            return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .Include(vehicle => vehicle.Refuels)
+                .First(vehicle => vehicle.ID == i_vehicleId);
+        }
+
         public string GetVehicleManufacturerAndModelById(string id)
         {
             if (!Int32.TryParse(id, out int i_id))
@@ -132,12 +139,12 @@ namespace Database
             return $"{vehicle.Manufacturer} {vehicle.Model}";
         }
 
-        public async Task<int> GetVehicleOwnerId(int vehicleId)
+        public async Task<int?> GetVehicleOwnerId(int vehicleId)
         {
             var vehicle = await _ctx.Vehicles.Include(vehicle => vehicle.Owner)
                 .FirstOrDefaultAsync(vehicle => vehicle.ID == vehicleId);
 
-            return vehicle.Owner.ID;
+            return vehicle?.Owner?.ID;
         }
 
         public int SaveChanges()

@@ -20,6 +20,7 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
 
         [BindProperty]
         public InputVehicleModel Input { get; set; }
+        public string ErrorMessage { get; set; }
         public AddModel(IVehiclesManager vehiclesManager, IUsersManager usersManager)
         {
             _vehiclesManager = vehiclesManager;
@@ -36,12 +37,13 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
             {
                 int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
                 User owner = await _usersManager.GetUserById(userId);
-                await _vehiclesManager.Add(Input.Manufacturer, Input.Model, Input.Engine, Input.HorsePower, Input.Description, owner);
+                await _vehiclesManager.Add(Input.Manufacturer, Input.Model, Input.Engine, Input.Horsepower, Input.Description, owner);
 
                 return RedirectToPage("Index", new { status = "added" });
             }
 
-            return RedirectToPage(".", new { status = "failed"});
+            ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";
+            return Page();
         }
     }
 }

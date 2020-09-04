@@ -23,7 +23,7 @@ namespace Refuel.Models
         [Required]
         [Range(1, 1000)]
         [Display(Name = "Konie mechaniczne")]
-        public int HorsePower { get; set; }
+        public int Horsepower { get; set; }
         [DataType(DataType.MultilineText)]
         [Display(Name = "Opis")]
         public string Description { get; set; }
