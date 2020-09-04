@@ -9,3 +9,7 @@
 .width-100-p{
     width: 100%;
 }
+
+.cursor-notallowed {
+    cursor: not-allowed;
+}
