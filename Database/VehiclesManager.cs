@@ -128,15 +128,9 @@ namespace Database
                 .First(vehicle => vehicle.ID == i_vehicleId);
         }
 
-        public string GetVehicleManufacturerAndModelById(string id)
-        {
-            // todo: zmienić na int
-            if (!Int32.TryParse(id, out int i_id))
-            {
-                return String.Empty;
-            }
-            
-            var vehicle = _ctx.Vehicles.FirstOrDefault(vehicle => vehicle.ID == i_id);
+        public string GetVehicleManufacturerAndModelById(int id)
+        {   
+            var vehicle = _ctx.Vehicles.FirstOrDefault(vehicle => vehicle.ID == id);
             return $"{vehicle.Manufacturer} {vehicle.Model}";
         }
 

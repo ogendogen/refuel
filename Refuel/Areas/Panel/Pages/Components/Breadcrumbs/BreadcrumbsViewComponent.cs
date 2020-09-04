@@ -80,7 +80,12 @@ namespace Refuel.Components.Breadcrumbs
             switch(key)
             {
                 case "Vehicles":
-                    return _vehicleManager.GetVehicleManufacturerAndModelById(value);
+                    if (Int32.TryParse(value, out int id))
+                    {
+                        return _vehicleManager.GetVehicleManufacturerAndModelById(id);
+                    }
+                    
+                    return "*** UNKNOWN VEHICLE ***";
 
                 default:
                     return "*** SECTION NAME MISSING ***";

@@ -23,7 +23,7 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
 
         public void OnGet(int vehicleId)
         {
-            VehicleName = _vehiclesManager.GetVehicleManufacturerAndModelById(vehicleId.ToString());
+            VehicleName = _vehiclesManager.GetVehicleManufacturerAndModelById(vehicleId);
         }
 
         public async Task<IActionResult> OnPostAsync(int vehicleId)
