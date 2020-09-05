@@ -34,7 +34,8 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
                 int? ownerId = _vehiclesManager.GetVehicleOwnerId(i_vehicleId).Result;
                 if (ownerId == null)
                 {
-                    return RedirectToPage("Index", new { status = "forbidden" });
+                    TempData["status"] = "forbidden";
+                    return RedirectToPage("Index");
                 }
 
                 int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
@@ -53,13 +54,15 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
                 }
                 else
                 {
-                    return RedirectToPage("Index", new { status = "forbidden" });
+                    TempData["status"] = "forbidden";
+                    return RedirectToPage("Index");
                 }
 
                 return Page();
             }
 
-            return RedirectToPage("Index", new { status = "forbidden" });
+            TempData["status"] = "forbidden";
+            return RedirectToPage("Index");
         }
 
         public async Task<IActionResult> OnPost(string vehicleId)
@@ -88,7 +91,8 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
                     return Page();
                 }
 
-                return RedirectToPage("Index", new { status = "edited" });
+                TempData["status"] = "edited";
+                return RedirectToPage("Index");
             }
 
             ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";

@@ -39,7 +39,8 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
                 User owner = await _usersManager.GetUserById(userId);
                 await _vehiclesManager.Add(Input.Manufacturer, Input.Model, Input.Engine, Input.Horsepower, Input.Description, owner);
 
-                return RedirectToPage("Index", new { status = "added" });
+                TempData["status"] = "added";
+                return RedirectToPage("Index");
             }
 
             ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";

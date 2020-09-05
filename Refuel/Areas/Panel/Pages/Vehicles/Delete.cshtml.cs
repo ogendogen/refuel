@@ -34,10 +34,12 @@ namespace Refuel.Areas.Panel.Pages.Vehicles
             if (vehicleId == vehicle.ID)
             {
                 await _vehiclesManager.Delete(vehicle);
-                return RedirectToPage("Index", new { status = "deleted"});
+                TempData["status"] = "deleted";
+                return RedirectToPage("Index");
             }
 
-            return RedirectToPage("Index", new { status = "forbidden"});
+            TempData["status"] = "forbidden";
+            return RedirectToPage("Index");
         }
     }
 }
