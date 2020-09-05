@@ -3,14 +3,16 @@ using System;
 using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
     [DbContext(typeof(RefuelContext))]
-    partial class RefuelContextModelSnapshot : ModelSnapshot
+    [Migration("20200826195616_DecimalPrecision")]
+    partial class DecimalPrecision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace Database.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(6, 2)");
 
-                    b.Property<int>("VehicleID")
+                    b.Property<int?>("VehicleID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -110,8 +112,8 @@ namespace Database.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("varchar(500) CHARACTER SET utf8mb4")
-                        .HasMaxLength(500);
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<decimal>("Engine")
                         .HasColumnType("decimal(6, 2)");
@@ -129,7 +131,7 @@ namespace Database.Migrations
                         .HasColumnType("varchar(32) CHARACTER SET utf8mb4")
                         .HasMaxLength(32);
 
-                    b.Property<int>("OwnerID")
+                    b.Property<int?>("OwnerID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -144,17 +146,14 @@ namespace Database.Migrations
                     b.HasOne("Database.Models.Vehicle", "Vehicle")
                         .WithMany("Refuels")
                         .HasForeignKey("VehicleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Database.Models.Vehicle", b =>
                 {
                     b.HasOne("Database.Models.User", "Owner")
                         .WithMany("Vehicles")
-                        .HasForeignKey("OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerID");
                 });
 #pragma warning restore 612, 618
         }

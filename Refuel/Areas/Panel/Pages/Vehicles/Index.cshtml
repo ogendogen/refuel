@@ -1,0 +1,67 @@
+﻿@page
+@model Refuel.Areas.Panel.Pages.Vehicles.IndexModel
+@addTagHelper *, Refuel
+@{
+    int userId = @Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
+    bool isAdded = (TempData.ContainsKey("status") && TempData["status"].ToString() == "added");
+    bool isEdited = (TempData.ContainsKey("status") && TempData["status"].ToString() == "edited");
+    bool isForbidden = (TempData.ContainsKey("status") && TempData["status"].ToString() == "forbidden");
+    bool isDeleted = (TempData.ContainsKey("status") && TempData["status"].ToString() == "deleted");
+}
+
+@if (isAdded)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd dodany poprawnie!
+            </div>
+        </div>
+    </div>
+}
+@if (isEdited)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd został edytowany!
+            </div>
+        </div>
+    </div>
+}
+@if (isDeleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                Pojazd został usunięty razem z jego historią!
+            </div>
+        </div>
+    </div>
+}
+@if (isForbidden)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                Dany pojazd nie istnieje lub nie jesteś jego posiadaczem!
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-6">
+        <a asp-page="Add">
+            <input type="button" class="btn btn-success width-50-p float-right" value="Dodaj nowy" />
+        </a>
+    </div>
+</div>
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <vc:vehicles-table user-id="userId" />
+    </div>
+</div>

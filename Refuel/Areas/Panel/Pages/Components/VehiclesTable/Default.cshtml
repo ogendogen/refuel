@@ -1,0 +1,47 @@
+﻿@using Database.Models
+@model List<Vehicle>
+@{
+    int i = 0;
+    int descriptionLimit = 30;
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Firma</th>
+                <th scope="col">Model</th>
+                <th scope="col">Pojemność silnika</th>
+                <th scope="col">Konie mechaniczne</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Vehicle vehicle in Model)
+            {
+                <tr>
+                    <th scope="row">@(++i)</th>
+                    <td>@vehicle.Manufacturer</td>
+                    <td>@vehicle.Model</td>
+                    <td>@vehicle.Engine</td>
+                    <td>@vehicle.Horsepower</td>
+                    <td>@(vehicle.Description.Length > descriptionLimit ? vehicle.Description.Substring(descriptionLimit) + "..." : vehicle.Description)</td>
+                    <td>
+                        <div class="dropdown">
+                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                <i class="dw dw-more"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
+                                <a class="dropdown-item" asp-page="/Vehicles/Details" asp-route-vehicleId="@vehicle.ID"><i class="dw dw-eye"></i> Szczegóły</a>
+                                <a class="dropdown-item" asp-page="/Vehicles/Edit" asp-route-vehicleId="@vehicle.ID"><i class="dw dw-edit2"></i> Edycja</a>
+                                <a class="dropdown-item" asp-page="/Vehicles/Delete" asp-route-vehicleId="@vehicle.ID"><i class="dw dw-delete-3"></i> Usuń</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -43,6 +44,8 @@ namespace Refuel
 
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IEmailManager, EmailManager>();
+            services.AddScoped<IVehiclesManager, VehiclesManager>();
+            services.AddSingleton<IDictionaryService, DictionaryService>();
 
             services.AddControllers();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -63,7 +66,7 @@ namespace Refuel
                     options.ClientId = googleAuth.SiteKey;
                     options.ClientSecret = passwords.GoogleSecretKey;
 
-                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "UserId");
+                    options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "ID");
                     options.ClaimActions.MapJsonKey(ClaimTypes.Email, "EmailAddress", ClaimValueTypes.Email);
                     options.ClaimActions.MapJsonKey(ClaimTypes.Name, "Name");
                 });
@@ -104,6 +107,12 @@ namespace Refuel
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
     }
 }

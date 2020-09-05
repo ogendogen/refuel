@@ -13,11 +13,11 @@ namespace Database
 {
     public class UsersManager : IUsersManager
     {
-        private readonly RefuelContext ctx;
+        private readonly RefuelContext _ctx;
 
         public UsersManager(RefuelContext refuelContext)
         {
-            ctx = refuelContext;
+            _ctx = refuelContext;
         }
 
         public async Task<User> Authenticate(string login, string password)
@@ -28,17 +28,17 @@ namespace Database
                 return null;
             }
             string hashed = HashPassword(password, salt);
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == hashed && String.IsNullOrEmpty(user.ExternalProvider));
+            return await _ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Password == hashed && String.IsNullOrEmpty(user.ExternalProvider));
         }
 
         public int SaveChanges()
         {
-            return ctx.SaveChanges();
+            return _ctx.SaveChanges();
         }
 
         public string GetUserSalt(string login)
         {
-            return ctx.Users.FirstOrDefault(user => user.Login == login)?.Salt;
+            return _ctx.Users.FirstOrDefault(user => user.Login == login)?.Salt;
         }
 
         public async Task<User> RegisterNewUser(string login, string password, string email)
@@ -46,7 +46,7 @@ namespace Database
             string salt = GenerateSalt();
             string hashedPassword = HashPassword(password, salt);
 
-            var entityUser = await ctx.AddAsync(new User()
+            var entityUser = await _ctx.AddAsync(new User()
             {
                 Login = login,
                 Password = hashedPassword,
@@ -61,12 +61,12 @@ namespace Database
 
         public async Task<bool> IsLoginUsed(string login)
         {
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Login == login) != null;
+            return await _ctx.Users.FirstOrDefaultAsync(user => user.Login == login) != null;
         }
 
         public async Task<bool> IsEmailUsed(string email)
         {
-            return await ctx.Users.FirstOrDefaultAsync(user => user.Email == email) != null;
+            return await _ctx.Users.FirstOrDefaultAsync(user => user.Email == email) != null;
         }
 
         private string GenerateSalt()
@@ -95,13 +95,13 @@ namespace Database
 
         public async Task<bool> IsUsersEmailVerified(User user)
         {
-            var dbUser = await ctx.Users.FirstOrDefaultAsync(dbUser => user.ID == dbUser.ID);
+            var dbUser = await _ctx.Users.FirstOrDefaultAsync(dbUser => user.ID == dbUser.ID);
             return dbUser != null && dbUser.Email == "0";
         }
 
         public async Task<int> VerifyUser(int id, string verificationCode)
         {
-            User user = await ctx.Users.FirstOrDefaultAsync(user => user.ID == id);
+            User user = await _ctx.Users.FirstOrDefaultAsync(user => user.ID == id);
             if (user == null)
             {
                 return 0;
@@ -110,21 +110,21 @@ namespace Database
             if (user.VerificationCode != "0" && user.VerificationCode == verificationCode)
             {
                 user.VerificationCode = "0";
-                ctx.Users.Update(user);
+                _ctx.Users.Update(user);
             }
 
-            return await ctx.SaveChangesAsync();
+            return await _ctx.SaveChangesAsync();
         }
 
         public async Task<User> RegisterOrLoginGoogleUser(string login, string email)
         {
-            var dbUser = await ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Email == email && user.ExternalProvider == "google");
+            var dbUser = await _ctx.Users.FirstOrDefaultAsync(user => user.Login == login && user.Email == email && user.ExternalProvider == "google");
             if (dbUser != null)
             {
                 return dbUser;
             }
 
-            var entityUser = await ctx.Users.AddAsync(new User()
+            var entityUser = await _ctx.Users.AddAsync(new User()
             {
                 Login = login,
                 Email = email,
@@ -132,9 +132,19 @@ namespace Database
                 VerificationCode = "0",
                 ExternalProvider = "google"
             });
-            await ctx.SaveChangesAsync();
+            await _ctx.SaveChangesAsync();
 
             return entityUser.Entity;
+        }
+
+        public List<Vehicle> GetUserAllVehicles(int userId)
+        {
+            return _ctx.Vehicles.Where(vehicle => vehicle.Owner.ID == userId).ToList();
+        }
+
+        public async Task<User> GetUserById(int userId)
+        {
+            return await _ctx.Users.FirstOrDefaultAsync(user => user.ID == userId);
         }
     }
 }

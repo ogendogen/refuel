@@ -1,0 +1,34 @@
+﻿@page "{vehicleId:int}"
+@model Refuel.Areas.Panel.Pages.Vehicles.EditModel
+@using Refuel.Areas.Panel.Pages.Components.VehiclesForm
+@addTagHelper *, Refuel
+@{
+}
+
+@if (!String.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning">
+        @Model.ErrorMessage
+    </div>
+}
+
+<h2>Edycja pojazdu</h2>
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post" id="editVehicleForm">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:vehicles-form vehicles-form-mode="@VehiclesFormMode.Edit" input-vehicle-model="@Model.Input" />
+
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button type="submit" form="editVehicleForm" class="btn btn-primary btn-info width-100-p">
+                Edytuj
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

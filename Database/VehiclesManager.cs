@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
@@ -18,8 +19,8 @@ namespace Database
 
         public async Task<Vehicle> Add(string manufacturer, string model, decimal engine, int horsePower, string description, User owner)
         {
-            if (!String.IsNullOrEmpty(manufacturer) ||
-                !String.IsNullOrEmpty(model) ||
+            if (String.IsNullOrEmpty(manufacturer) ||
+                String.IsNullOrEmpty(model) ||
                 engine == 0.0M ||
                 horsePower == 0)
             {
@@ -118,6 +119,27 @@ namespace Database
             return _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
                 .Select(refuel => refuel.Combustion)
                 .Average();
+        }
+
+        public Vehicle GetVehicleById(int i_vehicleId)
+        {
+            return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .Include(vehicle => vehicle.Refuels)
+                .First(vehicle => vehicle.ID == i_vehicleId);
+        }
+
+        public string GetVehicleManufacturerAndModelById(int id)
+        {   
+            var vehicle = _ctx.Vehicles.FirstOrDefault(vehicle => vehicle.ID == id);
+            return $"{vehicle.Manufacturer} {vehicle.Model}";
+        }
+
+        public async Task<int?> GetVehicleOwnerId(int vehicleId)
+        {
+            var vehicle = await _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .FirstOrDefaultAsync(vehicle => vehicle.ID == vehicleId);
+
+            return vehicle?.Owner?.ID;
         }
 
         public int SaveChanges()
