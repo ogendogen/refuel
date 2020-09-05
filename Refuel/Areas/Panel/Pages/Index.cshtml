@@ -1,0 +1,15 @@
+﻿@page
+@model Refuel.Areas.Panel.Pages.IndexModel
+@{
+    ViewData["Title"] = "Start panel page";
+}
+
+<h1>Panel</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <h5>Jesteś zalogowany. Brawo!</h5>
+}
+else
+{
+    <h5>Nie jesteś zalogowany :(</h5>
+}

@@ -1,0 +1,39 @@
+﻿@page
+@model Refuel.Areas.Panel.Pages.Vehicles.AddModel
+@using Refuel.Areas.Panel.Pages.Components.VehiclesForm
+@addTagHelper *, Refuel
+@{
+    
+}
+
+@if (!String.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning">
+        @Model.ErrorMessage
+    </div>
+}
+
+<h2>Dodawanie nowego pojazdu</h2>
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post" id="addVehicleForm">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:vehicles-form vehicles-form-mode="@VehiclesFormMode.Add" input-vehicle-model="null" />
+
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button type="submit" form="addVehicleForm" class="btn btn-primary btn-success width-100-p">
+                Dodaj
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+@section ValidationScripts {
+    <partial name="_ValidationScriptsPartial" />
+}

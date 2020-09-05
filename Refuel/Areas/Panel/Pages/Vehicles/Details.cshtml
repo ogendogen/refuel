@@ -1,0 +1,27 @@
+﻿@page "{vehicleId:int}"
+@model Refuel.Areas.Panel.Pages.Vehicles.DetailsModel
+@using Refuel.Areas.Panel.Pages.Components.VehiclesForm
+@addTagHelper *, Refuel
+@{
+
+}
+
+<h2>Szczegóły pojazdu</h2>
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:vehicles-form vehicles-form-mode="@VehiclesFormMode.Details" input-vehicle-model="@Model.Input" />
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button href="Index" class="btn btn-primary btn-info width-100-p" onclick="window.location.href = '../Index'">
+                Powrót
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+<div class="row">
+    <div class="col-md-2 col-lg-3">
+
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <form method="post">
+            @if (!User.Identity.IsAuthenticated && Request.Query.ContainsKey("ReturnUrl"))
+            {
+                <span class="text-danger">Najpierw się zaloguj!</span>
+            }
+            <div asp-validation-summary="All" class="text-dark" />
+            <div class="form-group">
+                <label asp-for="Input.Login">
+                    @Html.DisplayNameFor(model => model.Input.Login)
+                </label>
+                <input asp-for="Input.Login" class="form-control" />
+
+                <span asp-validation-for="Input.Login" class="text-dark" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password">
+                    @Html.DisplayNameFor(model => model.Input.Password)
+                </label>
+                <input asp-for="Input.Password" class="form-control" />
+
+                <span asp-validation-for="Input.Password" class="text-dark" />
+            </div>
+
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" asp-for="Input.RememberMe" />
+                    <label class="custom-control-label" asp-for="Input.RememberMe">
+                        @Html.DisplayNameFor(model => model.Input.RememberMe)
+                    </label>
+                </div>
+
+                <span asp-validation-for="Input.RememberMe" class="text-dark" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    Zaloguj się
+                </button>
+
+                <a href="/Account/Register">
+                    Brak konta? Zarejestruj się
+                </a>
+            </div>
+
+            <span class="text-danger font-weight-bold">@Model.FormError</span>
+            <span class="text-success font-weight-bold">@Model.FormSuccess</span>
+        </form>
+    </div>
+</div>
+<div class="col-md-4 col-lg-5">
+    <div id="my-signin2"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

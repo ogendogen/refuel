@@ -1,0 +1,21 @@
+﻿@{
+    string controllerName = Url.ActionContext.ActionDescriptor.DisplayName;
+    bool isLoggedIn = User.Identity.IsAuthenticated;
+}
+
+<ul class="navbar-nav">
+    @if (isLoggedIn && !controllerName.Contains("Logout"))
+    {
+        <li class="nav-item">
+            <form class="form-inline" asp-page="/Account/Logout" method="post" onsubmit="signOut()">
+                <button type="submit" class="nav-link text-dark btn btn-link">Logout @User.Identity.Name</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Account/Login">Log In</a>
+        </li>
+    }
+</ul>

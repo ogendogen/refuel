@@ -1,0 +1,15 @@
+﻿@page
+@model Refuel.Pages.Account.ActivateModel
+@{
+    ViewData["Title"] = "Aktywacja konta";
+}
+
+<h4>Weryfikacja konta</h4>
+@if (!String.IsNullOrEmpty(Model.VerificationPassed))
+{
+    <span class="font-weight-bold" style="color: lime;">@Model.VerificationPassed</span>
+}
+else if (!String.IsNullOrEmpty(Model.VerificationFailed))
+{
+    <span class="font-weight-bold" style="color: red;">@Model.VerificationFailed</span>
+}

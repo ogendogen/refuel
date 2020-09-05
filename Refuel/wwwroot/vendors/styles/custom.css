@@ -1,0 +1,15 @@
+﻿a.pointer-cursor{
+    cursor: pointer;
+}
+
+.marginTop20{
+    margin-top: 20px;
+}
+
+.width-100-p{
+    width: 100%;
+}
+
+.cursor-notallowed {
+    cursor: not-allowed;
+}
