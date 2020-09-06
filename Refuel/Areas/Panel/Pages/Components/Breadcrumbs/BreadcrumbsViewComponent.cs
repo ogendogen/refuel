@@ -61,9 +61,9 @@ namespace Refuel.Components.Breadcrumbs
         {
             string path = HttpContext.Request.Path;
             string[] parts = path.Split('/');
-            if (parts.Length >= 2 && Int32.TryParse(parts.Last(), out int id))
+            if (parts.Length >= 3 && Int32.TryParse(parts.Last(), out int id))
             {
-                string translatedName = GetSectionTranslatedName(parts[2], parts.Last());
+                string translatedName = GetSectionTranslatedName(parts[2], parts.Last(), parts[3]);
 
                 return new Parameter()
                 {
@@ -75,7 +75,7 @@ namespace Refuel.Components.Breadcrumbs
             return null;
         }
 
-        private string GetSectionTranslatedName(string key, string value)
+        private string GetSectionTranslatedName(string key, string value, string subkey)
         {
             switch(key)
             {
@@ -88,12 +88,20 @@ namespace Refuel.Components.Breadcrumbs
                     return "*** UNKNOWN VEHICLE ***";
 
                 case "Refuels":
-                    if (Int32.TryParse(value, out int id2))
+
+                    if (subkey == "List")
                     {
-                        return _vehicleManager.GetVehicleManufacturerAndModelById(id2);
+                        if (Int32.TryParse(value, out int id2))
+                        {
+                            return _vehicleManager.GetVehicleManufacturerAndModelById(id2);
+                        }
+                    }
+                    else if (subkey == "Details" || subkey == "Edit" || subkey == "Delete")
+                    {
+                        return $"Tankowanie #{value}";
                     }
                     
-                    return "*** UNKNOWN VEHICLE ***";
+                    return "*** BŁĄD ***";
 
                 default:
                     return "*** SECTION NAME MISSING ***";

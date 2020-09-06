@@ -21,10 +21,17 @@ namespace Refuel.Areas.Panel.Pages.Refuels
         {
             _vehiclesManager = vehiclesManager;
         }
-        public void OnGet(int vehicleId)
+        public IActionResult OnGet(int vehicleId)
         {
+            int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
             Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
+            if (userId != vehicle.Owner.ID)
+            {
+                return Forbid();
+            }
+            
             Refuels = _vehiclesManager.GetAllVehicleRefuelsSortedDescendingByDate(vehicle).ToList();
+            return Page();
         }
     }
 }
