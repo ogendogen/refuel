@@ -29,5 +29,15 @@ namespace Refuel.Areas.Panel.Pages.Refuels
             int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
             UserVehicles = _vehiclesManager.GetAllUserVehicles(userId).ToList();
         }
+
+        public IActionResult OnPost()
+        {
+            if (Int32.TryParse(Request.Form["VehicleListModel"][0], out int vehicleId))
+            {
+                return RedirectToPage("List", new { vehicleId = vehicleId });
+            }
+
+            return Page();
+        }
     }
 }
