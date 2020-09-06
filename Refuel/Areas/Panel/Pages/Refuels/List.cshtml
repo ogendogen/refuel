@@ -1,6 +1,7 @@
 ﻿@page "{vehicleId:int}"
 @model Refuel.Areas.Panel.Pages.Refuels.ListModel
-@using RefuelType = Database.Models.Refuel;
+@using RefuelType = Database.Models.Refuel
+@using Utils
 @{
 }
 
@@ -22,12 +23,12 @@
             foreach (RefuelType refuel in Model.Refuels)
             {
                 <tr>
-                    <td>@refuel.Date</td>
+                    <td>@refuel.Date.ToString("dd.MM.yyyy HH:mm:ss")</td>
                     <td>@refuel.Kilometers</td>
                     <td>@refuel.PricePerLiter</td>
                     <td>@refuel.Liters</td>
                     <td>@refuel.Combustion</td>
-                    <td>@refuel.Fuel</td>
+                    <td>@refuel.Fuel.Description()</td>
                     <td>@refuel.TotalPrice</td>
                 </tr>
             }
