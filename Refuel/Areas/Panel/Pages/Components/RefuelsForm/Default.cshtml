@@ -1,0 +1,154 @@
+﻿@model Refuel.Models.RefuelFormModel
+@{
+    bool isDetails = Model.RefuelFormMode == RefuelsFormMode.Details;
+}
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.Date">
+            @Html.DisplayNameFor(model => model.Input.Date)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        @{
+            if (isDetails)
+            {
+                <input asp-for="Input.Date" class="form-control" readonly="readonly" />
+            }
+            else
+            {
+                <input asp-for="Input.Date" class="form-control" />
+            }
+        }
+    </div>
+
+    <span asp-validation-for="Input.Date" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.Kilometers">
+            @Html.DisplayNameFor(model => model.Input.Kilometers)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        @{
+            if (isDetails)
+            {
+                <input asp-for="Input.Kilometers" class="form-control" readonly="readonly" />
+            }
+            else
+            {
+                <input asp-for="Input.Kilometers" class="form-control" />
+            }
+        }
+    </div>
+
+    <span asp-validation-for="Input.Kilometers" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.PricePerLiter">
+            @Html.DisplayNameFor(model => model.Input.PricePerLiter)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        @{
+            if (isDetails)
+            {
+                <input asp-for="Input.PricePerLiter" type="number" min="1.0" max="7" step="0.01" value="1.0" class="form-control" readonly="readonly" />
+            }
+            else
+            {
+                <input asp-for="Input.PricePerLiter" type="number" min="1.0" max="7" step="0.01" value="1.0" class="form-control" />
+            }
+        }
+
+    </div>
+
+    <span asp-validation-for="Input.PricePerLiter" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.Liters">
+            @Html.DisplayNameFor(model => model.Input.Liters)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        @{
+            if (isDetails)
+            {
+                <input asp-for="Input.Liters" value="5" min="1" max="1000" step="0.01" class="form-control" readonly="readonly" />
+            }
+            else
+            {
+                <input asp-for="Input.Liters" value="5" min="10" max="1000" step="0.01" class="form-control" />
+            }
+        }
+
+    </div>
+
+    <span asp-validation-for="Input.Liters" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.Combustion">
+            @Html.DisplayNameFor(model => model.Input.Combustion)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        <input asp-for="Input.Combustion" class="form-control" readonly="readonly" />
+    </div>
+
+    <span asp-validation-for="Input.Combustion" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.Fuel">
+            @Html.DisplayNameFor(model => model.Input.Fuel)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        @if (isDetails)
+        {
+            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" disabled="disabled" class="form-control">
+            </select>
+        }
+        else
+        {
+            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" class="form-control">
+            </select>
+        }
+
+    </div>
+
+    <span asp-validation-for="Input.Fuel" class="text-danger" />
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-12 col-md-2 col-form-label">
+        <label asp-for="Input.TotalPrice">
+            @Html.DisplayNameFor(model => model.Input.TotalPrice)
+        </label>
+    </div>
+
+    <div class="col-sm-12 col-md-10">
+        <input asp-for="Input.TotalPrice" value="100" min="1" step="0.01" class="form-control" readonly="readonly" />
+    </div>
+
+    <span asp-validation-for="Input.TotalPrice" class="text-danger" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

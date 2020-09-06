@@ -12,5 +12,7 @@ namespace Database
         Task<int> Update(Refuel refuel);
         Task<int> Delete(Refuel refuel);
         int SaveChanges();
+        bool IsUserOwnsRefuel(int userId, int refuelId);
+        Refuel GetRefuelById(int refuelId);
     }
 }

@@ -45,6 +45,7 @@ namespace Refuel
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IEmailManager, EmailManager>();
             services.AddScoped<IVehiclesManager, VehiclesManager>();
+            services.AddScoped<IRefuelsManager, RefuelsManager>();
             services.AddSingleton<IDictionaryService, DictionaryService>();
 
             services.AddControllers();

@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
@@ -52,6 +53,19 @@ namespace Database
             _ctx.Refuels.Remove(refuel);
 
             return await _ctx.SaveChangesAsync();
+        }
+
+        public Refuel GetRefuelById(int refuelId)
+        {
+            return _ctx.Refuels.Include(refuel => refuel.Vehicle)
+                .FirstOrDefault(refuel => refuel.ID == refuelId);
+        }
+
+        public bool IsUserOwnsRefuel(int userId, int refuelId)
+        {
+            return _ctx.Refuels.Include(refuel => refuel.Vehicle)
+                .ThenInclude(vehicle => vehicle.Owner)
+                .FirstOrDefault(refuel => refuel.ID == refuelId && refuel.Vehicle.Owner.ID == userId) != null;
         }
 
         public int SaveChanges()

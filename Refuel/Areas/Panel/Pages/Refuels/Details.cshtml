@@ -1,6 +1,27 @@
 ﻿@page "{refuelId:int}"
 @model Refuel.Areas.Panel.Pages.Refuels.DetailsModel
+@using Refuel.Areas.Panel.Pages.Components.RefuelsForm
 @{
 }
+@addTagHelper *, Refuel
 
 <h2>Refuel details</h2>
+
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:refuels-form refuels-mode="Details" input-refuel-model="@Model.Input" />
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button href="Index" class="btn btn-primary btn-info width-100-p" onclick="window.location.href = '../Index'">
+                Powrót
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
