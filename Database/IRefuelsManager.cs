@@ -14,5 +14,6 @@ namespace Database
         int SaveChanges();
         bool IsUserOwnsRefuel(int userId, int refuelId);
         Refuel GetRefuelById(int refuelId);
+        Vehicle GetRefuelsVehicle(int refuelId);
     }
 }

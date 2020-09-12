@@ -61,6 +61,12 @@ namespace Database
                 .FirstOrDefault(refuel => refuel.ID == refuelId);
         }
 
+        public Vehicle GetRefuelsVehicle(int refuelId)
+        {
+            return GetRefuelById(refuelId)
+                .Vehicle;
+        }
+
         public bool IsUserOwnsRefuel(int userId, int refuelId)
         {
             return _ctx.Refuels.Include(refuel => refuel.Vehicle)
