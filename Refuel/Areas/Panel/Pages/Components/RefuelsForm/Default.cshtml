@@ -14,11 +14,11 @@
         @{
             if (isDetails)
             {
-                <input asp-for="Input.Date" class="form-control" readonly="readonly" />
+                <input asp-for="Input.Date" class="form-control datetimepicker" readonly="readonly" />
             }
             else
             {
-                <input asp-for="Input.Date" class="form-control" />
+                <input asp-for="Input.Date" class="form-control datetimepicker" />
             }
         }
     </div>
@@ -37,11 +37,11 @@
         @{
             if (isDetails)
             {
-                <input asp-for="Input.Kilometers" class="form-control" readonly="readonly" />
+                <input asp-for="Input.Kilometers" placeholder="100" class="form-control" readonly="readonly" />
             }
             else
             {
-                <input asp-for="Input.Kilometers" class="form-control" />
+                <input asp-for="Input.Kilometers" placeholder="100" class="form-control" />
             }
         }
     </div>
@@ -60,11 +60,11 @@
         @{
             if (isDetails)
             {
-                <input asp-for="Input.PricePerLiter" type="number" min="1.0" max="7" step="0.01" value="1.0" class="form-control" readonly="readonly" />
+                <input asp-for="Input.PricePerLiter" type="number" step="0.01" placeholder="1.0" class="form-control" readonly="readonly" />
             }
             else
             {
-                <input asp-for="Input.PricePerLiter" type="number" min="1.0" max="7" step="0.01" value="1.0" class="form-control" />
+                <input asp-for="Input.PricePerLiter" type="number" step="0.01" placeholder="1.0" class="form-control" />
             }
         }
 
@@ -84,11 +84,11 @@
         @{
             if (isDetails)
             {
-                <input asp-for="Input.Liters" value="5" min="1" max="1000" step="0.01" class="form-control" readonly="readonly" />
+                <input asp-for="Input.Liters" type="number" min="1.0" max="1000.0" step="0.01" placeholder="1.0" class="form-control" readonly="readonly" />
             }
             else
             {
-                <input asp-for="Input.Liters" value="5" min="10" max="1000" step="0.01" class="form-control" />
+                <input asp-for="Input.Liters" type="number" min="1.0" max="1000.0" step="0.01" placeholder="1.0" class="form-control" />
             }
         }
 
@@ -143,7 +143,7 @@
     </div>
 
     <div class="col-sm-12 col-md-10">
-        <input asp-for="Input.TotalPrice" value="100" min="1" step="0.01" class="form-control" readonly="readonly" />
+        <input asp-for="Input.TotalPrice" placeholder="100.0" min="1" step="0.01" class="form-control" readonly="readonly" />
     </div>
 
     <span asp-validation-for="Input.TotalPrice" class="text-danger" />

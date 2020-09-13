@@ -175,7 +175,7 @@ jQuery(document).ready(function(){
 	});
 	$('.datetimepicker').datepicker({
 		timepicker: true,
-		language: 'en',
+		language: 'pl',
 		autoClose: true,
 		dateFormat: 'dd MM yyyy',
 	});
