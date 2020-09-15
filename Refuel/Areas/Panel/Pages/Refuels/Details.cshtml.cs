@@ -44,5 +44,11 @@ namespace Refuel.Areas.Panel.Pages.Refuels
 
             return Page();
         }
+
+        public IActionResult OnPost(int refuelId)
+        {
+            int vehicleIdVar = _refuelsManager.GetRefuelsVehicle(refuelId).ID;
+            return RedirectToPage("List", new {vehicleId = vehicleIdVar});
+        }
     }
 }

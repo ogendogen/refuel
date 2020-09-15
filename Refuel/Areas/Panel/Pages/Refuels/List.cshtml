@@ -3,9 +3,14 @@
 @model Refuel.Areas.Panel.Pages.Refuels.ListModel
 @using Utils
 @{
+    bool isEdited = (TempData.ContainsKey("status") && TempData["status"].ToString() == "edited");
 }
 
-<h2>Vehicle list goes here...</h2>
+<h2>Lista pojazdów</h2>
+@if (isEdited)
+{
+    <div class="alert alert-info font-weight-bold">Tankowanie zostało zedytowane!</div>
+}
 <table id="table_id" class="display">
     <thead>
         <tr>

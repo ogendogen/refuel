@@ -71,7 +71,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 Vehicle refuelsVehicle = _refuelsManager.GetRefuelsVehicle(refuelId);
 
                 TempData["status"] = "edited";
-                return RedirectToPage("List", refuelsVehicle.ID);
+                return RedirectToPage("List", new {vehicleId = refuelsVehicle.ID });
             }
             
             ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";
