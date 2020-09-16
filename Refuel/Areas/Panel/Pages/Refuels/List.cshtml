@@ -4,12 +4,17 @@
 @using Utils
 @{
     bool isEdited = (TempData.ContainsKey("status") && TempData["status"].ToString() == "edited");
+    bool isDeleted = (TempData.ContainsKey("status") && TempData["status"].ToString() == "deleted");
 }
 
 <h2>Lista pojazdów</h2>
 @if (isEdited)
 {
     <div class="alert alert-info font-weight-bold">Tankowanie zostało zedytowane!</div>
+}
+@if (isDeleted)
+{
+    <div class="alert alert-warning font-weight-bold">Tankowanie usunięte!</div>
 }
 <table id="table_id" class="display">
     <thead>
