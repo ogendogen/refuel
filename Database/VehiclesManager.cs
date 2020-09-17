@@ -149,6 +149,12 @@ namespace Database
             return vehicle?.Owner?.ID;
         }
 
+        public bool IsUserOwnsVehicle(int userId, int vehicleId)
+        {
+            return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .Any(vehicle => vehicle.Owner.ID == userId && vehicle.ID == vehicleId);
+        }
+
         public int SaveChanges()
         {
             return _ctx.SaveChanges();

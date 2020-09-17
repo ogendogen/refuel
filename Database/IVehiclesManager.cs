@@ -23,5 +23,6 @@ namespace Database
         Task<int?> GetVehicleOwnerId(int vehicleId);
         Vehicle GetVehicleById(int i_vehicleId);
         IEnumerable<Vehicle> GetAllUserVehicles(int userId);
+        bool IsUserOwnsVehicle(int userId, int vehicleId);
     }
 }
