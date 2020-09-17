@@ -5,6 +5,7 @@
 @{
     bool isEdited = (TempData.ContainsKey("status") && TempData["status"].ToString() == "edited");
     bool isDeleted = (TempData.ContainsKey("status") && TempData["status"].ToString() == "deleted");
+    bool isAdded = (TempData.ContainsKey("status") && TempData["status"].ToString() == "added");
 }
 
 <h2>Lista pojazdów</h2>
@@ -16,10 +17,14 @@
 {
     <div class="alert alert-success">Tankowanie usunięte!</div>
 }
+@if (isAdded)
+{
+    <div class="alert alert-success">Nowe tankowanie dodane!</div>
+}
 <div class="row marginBottom20">
     <div class="col-md-9"></div>
     <div class="col-md-3">
-        <a asp-page="Add">
+        <a asp-page="Add" asp-route-vehicleId="@Model.VehicleID">
             <input type="button" class="btn btn-success width-100-p float-right" value="Dodaj nowe tankowanie" />
         </a>
     </div>

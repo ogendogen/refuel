@@ -14,6 +14,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
     {
         [BindProperty]
         public List<RefuelType> Refuels { get; set; }
+        public int VehicleID { get; set; }
 
         private readonly IVehiclesManager _vehiclesManager;
 
@@ -23,6 +24,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
         }
         public IActionResult OnGet(int vehicleId)
         {
+            VehicleID = vehicleId;
             int userId = Int32.Parse(HttpContext.User.Claims.First(claim => claim.Type.Contains("nameidentifier")).Value);
             Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
             if (userId != vehicle.Owner.ID)
