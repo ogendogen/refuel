@@ -17,14 +17,15 @@ namespace Database
             _ctx = ctx;
         }
 
-        public async Task<Refuel> Add(DateTime date, uint kilometers, decimal pricePerLiter, decimal liters, decimal combustion, FuelType fuel, decimal totalPrice)
+        public async Task<Refuel> Add(DateTime date, uint kilometers, decimal pricePerLiter, decimal liters, decimal combustion, FuelType fuel, decimal totalPrice, Vehicle vehicle)
         {
             if (date == null ||
                 kilometers == 0 ||
                 pricePerLiter == 0.0M ||
                 liters == 0.0M ||
                 combustion == 0.0M ||
-                totalPrice == 0.0M)
+                totalPrice == 0.0M ||
+                vehicle == null)
             {
                 throw new Exception("Brakujące dane! Wypełnij wszystkie pola");
             }
@@ -42,7 +43,8 @@ namespace Database
                 Liters = liters,
                 Combustion = combustion,
                 Fuel = fuel,
-                TotalPrice = totalPrice
+                TotalPrice = totalPrice,
+                Vehicle = vehicle
             });
 
             return result.Entity;

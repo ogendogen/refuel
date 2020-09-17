@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Database;
+using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refuel.Models;
@@ -41,6 +42,8 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 return Forbid();
             }
 
+            Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
+
             if (ModelState.IsValid)
             {
                 var refuel = await _refuelsManager.Add(date: Input.Date,
@@ -49,7 +52,8 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                     liters: Input.Liters,
                     combustion: Input.Combustion,
                     fuel: Input.Fuel,
-                    totalPrice: Input.TotalPrice);
+                    totalPrice: Input.TotalPrice,
+                    vehicle: vehicle);
 
                 TempData["status"] = "added";
                 return RedirectToPage("List", new {vehicleId = vehicleId});
