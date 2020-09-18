@@ -38,7 +38,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
             RefuelType refuel = _refuelsManager.GetRefuelById(refuelId);
             Input = new InputRefuelModel()
             {
-                Date = refuel.Date.ToString("yyyy-MM-dd HH:mm"),
+                Date = refuel.Date.ToString("dd-MM-yyyy HH:mm"),
                 Kilometers = refuel.Kilometers,
                 Liters = refuel.Liters,
                 PricePerLiter = refuel.PricePerLiter,
