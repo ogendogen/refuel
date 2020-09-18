@@ -11,7 +11,8 @@ namespace Refuel.Models
     {
         [Required]
         [Display(Name = "Data tankowania")]
-        public DateTime Date { get; set; }
+        [DateTimeFormat("dd-MM-yyyy HH:mm")]
+        public string Date { get; set; }
         [Required]
         [Display(Name = "Kilometry")]
         public uint Kilometers { get; set; }
