@@ -47,6 +47,8 @@ namespace Database
                 Vehicle = vehicle
             });
 
+            await _ctx.SaveChangesAsync();
+
             return result.Entity;
         }
 
