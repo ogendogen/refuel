@@ -4,7 +4,14 @@
 }
 @addTagHelper *, Refuel
 <h2>Dodaj nowe tankowanie</h2>
-
+@if (Model.ModelErrors.Count > 0)
+{
+    foreach (string error in Model.ModelErrors)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+    Model.ModelErrors.Clear();
+}
 <div class="row marginTop20">
     <div class="col-md-12">
         <form method="post" id="detailsForm">

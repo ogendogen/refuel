@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Database;
 using Database.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refuel.Models;
 using RefuelType = Database.Models.Refuel;
@@ -17,10 +18,13 @@ namespace Refuel.Areas.Panel.Pages.Refuels
         [BindProperty]
         public InputRefuelModel Input { get; set; }
         public string ErrorMessage { get; set; }
+        public List<string> ModelErrors { get; set; }
+
         private readonly IRefuelsManager _refuelsManager;
         public EditModel(IRefuelsManager refuelsManager)
         {
             _refuelsManager = refuelsManager;
+            ModelErrors = new List<string>();
         }
         public IActionResult OnGet(int refuelId)
         {
@@ -77,9 +81,24 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 TempData["status"] = "edited";
                 return RedirectToPage("List", new {vehicleId = refuelsVehicle.ID });
             }
+            else
+            {
+                SaveAllErrors(ModelState.Values);
+            }
             
             ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";
             return Page();
+        }
+
+        private void SaveAllErrors(ModelStateDictionary.ValueEnumerable values)
+        {
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    ModelErrors.Add(error.ErrorMessage);
+                }
+            }
         }
     }
 }

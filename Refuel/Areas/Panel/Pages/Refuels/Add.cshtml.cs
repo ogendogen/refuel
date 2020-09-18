@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Database;
 using Database.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refuel.Models;
 
@@ -14,6 +15,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
     {
         [BindProperty]
         public InputRefuelModel Input { get; set; }
+        public List<string> ModelErrors { get; set; }
 
         private readonly IRefuelsManager _refuelsManager;
         private readonly IVehiclesManager _vehiclesManager;
@@ -22,6 +24,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
         {
             _refuelsManager = refuelsManager;
             _vehiclesManager = vehiclesManager;
+            ModelErrors = new List<string>();
         }
         public IActionResult OnGet(int vehicleId)
         {
@@ -61,8 +64,23 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 TempData["status"] = "added";
                 return RedirectToPage("List", new {vehicleId = vehicleId});
             }
+            else
+            {
+                SaveAllErrors(ModelState.Values);
+            }
 
             return Page();
+        }
+
+        private void SaveAllErrors(ModelStateDictionary.ValueEnumerable values)
+        {
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    ModelErrors.Add(error.ErrorMessage);
+                }
+            }
         }
     }
 }
