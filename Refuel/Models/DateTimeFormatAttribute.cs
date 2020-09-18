@@ -11,8 +11,8 @@ namespace Refuel.Models
             Format = format;
         }
 
-        public string GetErrorMessage() =>
-            $"Niepoprawny format daty";
+        public string GetIncorrectFormatErrorMessage() => $"Niepoprawny format daty";
+        public string GetFutureDateFormatErrorMessage() => $"Data jest z przyszłości";
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -21,12 +21,17 @@ namespace Refuel.Models
 
             bool result = DateTime.TryParseExact(dt, Format, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime refuelDateDt);
             
-            if (result)
+            if (!result)
             {
-                return ValidationResult.Success;
+                return new ValidationResult(GetIncorrectFormatErrorMessage());
             }
 
-            return new ValidationResult(GetErrorMessage());
+            if (refuelDateDt > DateTime.Now)
+            {
+                return new ValidationResult(GetFutureDateFormatErrorMessage());
+            }
+
+            return ValidationResult.Success;
         }
     }
 }
