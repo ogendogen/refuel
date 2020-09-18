@@ -12,7 +12,7 @@ namespace Refuel.Models
         }
 
         public string GetErrorMessage() =>
-            $"Incorrect format";
+            $"Niepoprawny format daty";
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
