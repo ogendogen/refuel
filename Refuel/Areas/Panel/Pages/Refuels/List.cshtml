@@ -8,7 +8,7 @@
     bool isAdded = (TempData.ContainsKey("status") && TempData["status"].ToString() == "added");
 }
 
-<h2>Lista pojazdów</h2>
+<h2>Lista tankowań pojazdu @Model.VehicleFullName</h2>
 @if (isEdited)
 {
     <div class="alert alert-success">Tankowanie zostało zedytowane!</div>
