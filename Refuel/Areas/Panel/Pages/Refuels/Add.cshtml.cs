@@ -46,14 +46,17 @@ namespace Refuel.Areas.Panel.Pages.Refuels
 
             if (ModelState.IsValid)
             {
-                var refuel = await _refuelsManager.Add(date: Input.Date,
-                    kilometers: Input.Kilometers,
-                    pricePerLiter: Input.PricePerLiter,
-                    liters: Input.Liters,
-                    combustion: Input.Combustion,
-                    fuel: Input.Fuel,
-                    totalPrice: Input.TotalPrice,
-                    vehicle: vehicle);
+                if (DateTime.TryParseExact(Input.Date, "dd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime refuelDateDt))
+                {
+                    var refuel = await _refuelsManager.Add(date: refuelDateDt,
+                        kilometers: Input.Kilometers,
+                        pricePerLiter: Input.PricePerLiter,
+                        liters: Input.Liters,
+                        combustion: Input.Combustion,
+                        fuel: Input.Fuel,
+                        totalPrice: Input.TotalPrice,
+                        vehicle: vehicle);
+                }
 
                 TempData["status"] = "added";
                 return RedirectToPage("List", new {vehicleId = vehicleId});

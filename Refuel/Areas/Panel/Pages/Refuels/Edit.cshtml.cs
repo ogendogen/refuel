@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Database;
 using Database.Models;
@@ -33,7 +34,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
             RefuelType refuel = _refuelsManager.GetRefuelById(refuelId);
             Input = new InputRefuelModel()
             {
-                Date = refuel.Date,
+                Date = refuel.Date.ToString("yyyy-MM-dd HH:mm"),
                 Kilometers = refuel.Kilometers,
                 Liters = refuel.Liters,
                 PricePerLiter = refuel.PricePerLiter,
@@ -56,17 +57,20 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                     return Forbid();
                 }
 
-                _refuelsManager.Update(new RefuelType()
+                if (DateTime.TryParseExact(Input.Date, "dd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime refuelDateDt))
                 {
-                    ID = refuelId,
-                    Kilometers = Input.Kilometers,
-                    Date = Input.Date,
-                    Liters = Input.Liters,
-                    PricePerLiter = Input.PricePerLiter,
-                    Combustion = Input.Combustion,
-                    Fuel = Input.Fuel,
-                    TotalPrice = Input.TotalPrice
-                });
+                    _refuelsManager.Update(new RefuelType()
+                    {
+                        ID = refuelId,
+                        Kilometers = Input.Kilometers,
+                        Date = refuelDateDt,
+                        Liters = Input.Liters,
+                        PricePerLiter = Input.PricePerLiter,
+                        Combustion = Input.Combustion,
+                        Fuel = Input.Fuel,
+                        TotalPrice = Input.TotalPrice
+                    });
+                }
 
                 Vehicle refuelsVehicle = _refuelsManager.GetRefuelsVehicle(refuelId);
 
