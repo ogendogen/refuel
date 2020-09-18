@@ -61,6 +61,8 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                     return Forbid();
                 }
 
+                Vehicle refuelsVehicle = _refuelsManager.GetRefuelsVehicle(refuelId);
+
                 if (DateTime.TryParseExact(Input.Date, "dd-MM-yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime refuelDateDt))
                 {
                     _refuelsManager.Update(new RefuelType()
@@ -72,14 +74,13 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                         PricePerLiter = Input.PricePerLiter,
                         Combustion = Input.Combustion,
                         Fuel = Input.Fuel,
-                        TotalPrice = Input.TotalPrice
+                        TotalPrice = Input.TotalPrice,
+                        Vehicle = refuelsVehicle
                     });
                 }
 
-                Vehicle refuelsVehicle = _refuelsManager.GetRefuelsVehicle(refuelId);
-
                 TempData["status"] = "edited";
-                return RedirectToPage("List", new {vehicleId = refuelsVehicle.ID });
+                return RedirectToPage("List", new {vehicleId = refuelsVehicle.ID});
             }
             else
             {

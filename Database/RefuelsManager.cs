@@ -67,11 +67,20 @@ namespace Database
             return _ctx.SaveChanges();
         }
 
-        public async Task<int> Update(Refuel refuel)
+        public int Update(Refuel refuel)
         {
-            _ctx.Refuels.Update(refuel);
-            
-            return await _ctx.SaveChangesAsync();
+            try
+            {   
+               var entry = _ctx.Refuels.First(refuelDb => refuelDb.ID == refuel.ID);
+               _ctx.Entry(entry).CurrentValues.SetValues(refuel);
+               return _ctx.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                 // handle correct exception
+                 // log error
+                 return 0;
+            }
         }
     }
 }
