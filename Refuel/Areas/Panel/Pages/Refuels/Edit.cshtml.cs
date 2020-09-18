@@ -17,7 +17,6 @@ namespace Refuel.Areas.Panel.Pages.Refuels
     {
         [BindProperty]
         public InputRefuelModel Input { get; set; }
-        public string ErrorMessage { get; set; }
         public List<string> ModelErrors { get; set; }
 
         private readonly IRefuelsManager _refuelsManager;
@@ -87,7 +86,6 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 SaveAllErrors(ModelState.Values);
             }
             
-            ErrorMessage = "Zweryfikuj poprawnoœæ formularza!";
             return Page();
         }
 
