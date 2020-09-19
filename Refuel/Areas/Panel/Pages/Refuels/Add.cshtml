@@ -1,0 +1,32 @@
+﻿@page "{vehicleId:int}"
+@model Refuel.Areas.Panel.Pages.Refuels.AddModel
+@{
+}
+@addTagHelper *, Refuel
+<h2>Dodaj nowe tankowanie</h2>
+@if (Model.ModelErrors.Count > 0)
+{
+    foreach (string error in Model.ModelErrors)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+    Model.ModelErrors.Clear();
+}
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post" id="detailsForm">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:refuels-form refuels-mode="Add" input-refuel-model="@Model.Input" />
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button href="Index" form="detailsForm" type="submit" class="btn btn-primary btn-success width-100-p">
+                Dodaj
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

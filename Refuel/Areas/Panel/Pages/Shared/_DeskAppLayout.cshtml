@@ -24,6 +24,19 @@
     <link rel="stylesheet" type="text/css" href="/vendors/styles/style.css">
     <link rel="stylesheet" type="text/css" href="/vendors/styles/custom.css">
 
+    <!-- JS -->
+    <script src="/vendors/scripts/core.js"></script>
+    <script src="/vendors/scripts/script.min.js"></script>
+    <script src="/vendors/scripts/process.js"></script>
+    <script src="/vendors/scripts/layout-settings.js"></script>
+    <script src="/js/site.js"></script>
+    <script src="/vendors/scripts/jquery.ui.datepicker-pl.js"></script>
+    <script src="/vendors/scripts/decimal.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
     <!-- Google -->
     <partial name="_GoogleScript" />
     <partial name="_GoogleFunctions" />
@@ -55,11 +68,6 @@
         <partial name="_Footer" />
     </div>
 
-    <!-- js -->
-    <script src="/vendors/scripts/core.js"></script>
-    <script src="/vendors/scripts/script.min.js"></script>
-    <script src="/vendors/scripts/process.js"></script>
-    <script src="/vendors/scripts/layout-settings.js"></script>
     @RenderSection("ValidationScripts", required: false)
 
 </body>

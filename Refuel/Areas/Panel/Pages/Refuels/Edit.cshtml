@@ -1,0 +1,34 @@
+﻿@page "{refuelId:int}"
+@model Refuel.Areas.Panel.Pages.Refuels.EditModel
+@using Refuel.Areas.Panel.Pages.Components.RefuelsForm
+@{
+}
+@addTagHelper *, Refuel
+
+<h2>Edycja tankowania</h2>
+@if (Model.ModelErrors.Count > 0)
+{
+    foreach (string error in Model.ModelErrors)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+    Model.ModelErrors.Clear();
+}
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <form method="post" id="postForm">
+            <div asp-validation-summary="All" class="text-dark" />
+
+            <vc:refuels-form refuels-mode="Edit" input-refuel-model="@Model.Input" />
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <button href="Index" form="postForm" type="submit" class="btn btn-primary btn-info width-100-p">
+                Edytuj
+            </button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

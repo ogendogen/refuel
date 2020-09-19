@@ -59,6 +59,13 @@ namespace Database
             return await _ctx.SaveChangesAsync();
         }
 
+        public IEnumerable<Vehicle> GetAllUserVehicles(int userId)
+        {
+            return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .Where(vehicle => vehicle.Owner.ID == userId)
+                .AsEnumerable();
+        }
+
         public IEnumerable<Refuel> GetAllVehicleRefuelsSortedDescendingByDate(Vehicle vehicle)
         {
             var collection = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
@@ -140,6 +147,12 @@ namespace Database
                 .FirstOrDefaultAsync(vehicle => vehicle.ID == vehicleId);
 
             return vehicle?.Owner?.ID;
+        }
+
+        public bool IsUserOwnsVehicle(int userId, int vehicleId)
+        {
+            return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
+                .Any(vehicle => vehicle.Owner.ID == userId && vehicle.ID == vehicleId);
         }
 
         public int SaveChanges()

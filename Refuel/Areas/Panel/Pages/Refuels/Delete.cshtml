@@ -1,0 +1,29 @@
+﻿@page "{refuelId:int}"
+@model Refuel.Areas.Panel.Pages.Refuels.DeleteModel
+@{
+}
+
+<h2>Usuwanie tankowania #@Model.RefuelID</h2>
+
+<div class="row marginTop20">
+    <div class="col-md-12">
+        <div class="alert alert-danger text-center font-weight-bold font-24">
+            Czy na pewno chcesz usunąć to tankowanie? Operacja jest nieodwracalna!
+        </div>
+    </div>
+</div>
+<div class="row marginTop20">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <form method="post">
+            <button type="submit" class="btn btn-danger width-100-p cursor-notallowed" id="deleteButton" disabled="disabled">Usuń (10)</button>
+        </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+
+@section ValidationScripts{
+    <partial name="_DeleteCounter" />
+}

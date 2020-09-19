@@ -1,0 +1,80 @@
+﻿@page "{vehicleId:int}"
+@using RefuelType = Database.Models.Refuel
+@model Refuel.Areas.Panel.Pages.Refuels.ListModel
+@using Utils
+@{
+    bool isEdited = (TempData.ContainsKey("status") && TempData["status"].ToString() == "edited");
+    bool isDeleted = (TempData.ContainsKey("status") && TempData["status"].ToString() == "deleted");
+    bool isAdded = (TempData.ContainsKey("status") && TempData["status"].ToString() == "added");
+}
+
+<h2>Lista tankowań pojazdu @Model.VehicleFullName</h2>
+@if (isEdited)
+{
+    <div class="alert alert-success">Tankowanie zostało zedytowane!</div>
+}
+@if (isDeleted)
+{
+    <div class="alert alert-success">Tankowanie usunięte!</div>
+}
+@if (isAdded)
+{
+    <div class="alert alert-success">Nowe tankowanie dodane!</div>
+}
+<div class="row marginBottom20">
+    <div class="col-md-8"></div>
+    <div class="col-md-2">
+        <a asp-page="Stats" asp-route-vehicleId="@Model.VehicleID">
+            <input type="button" class="btn btn-info width-100-p float-right" value="Statystyki" />
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-page="Add" asp-route-vehicleId="@Model.VehicleID">
+            <input type="button" class="btn btn-success width-100-p float-right" value="Dodaj nowe tankowanie" />
+        </a>
+    </div>
+</div>
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Przejechane kilometry</th>
+            <th>Cena za litr</th>
+            <th>Zatankowano litrów</th>
+            <th>Spalanie</th>
+            <th>Typ Paliwa</th>
+            <th>Całkowita cena</th>
+            <th>Akcja</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (RefuelType refuel in Model.Refuels)
+            {
+                <tr>
+                    <td>@refuel.Date.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td>@refuel.Kilometers</td>
+                    <td>@refuel.PricePerLiter</td>
+                    <td>@refuel.Liters</td>
+                    <td>@refuel.Combustion</td>
+                    <td>@refuel.Fuel.Description()</td>
+                    <td>@refuel.TotalPrice</td>
+                    <td>
+                        <div class="dropdown">
+                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                <i class="dw dw-more"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" style="">
+                                <a class="dropdown-item" asp-page="/Refuels/Details" asp-route-refuelId="@refuel.ID"><i class="dw dw-eye"></i> Szczegóły</a>
+                                <a class="dropdown-item" asp-page="/Refuels/Edit" asp-route-refuelId="@refuel.ID"><i class="dw dw-edit2"></i> Edycja</a>
+                                <a class="dropdown-item" asp-page="/Refuels/Delete" asp-route-refuelId="@refuel.ID"><i class="dw dw-delete-3"></i> Usuń</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<partial name="_datatablesRefuels" />

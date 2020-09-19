@@ -8,9 +8,12 @@ namespace Database
 {
     public interface IRefuelsManager
     {
-        Task<Refuel> Add(DateTime date, uint kilometers, decimal pricePerLiter, decimal liters, decimal combustion, FuelType fuel, decimal totalPrice);
-        Task<int> Update(Refuel refuel);
+        Task<Refuel> Add(DateTime date, uint kilometers, decimal pricePerLiter, decimal liters, decimal combustion, FuelType fuel, decimal totalPrice, Vehicle vehicle);
+        int Update(Refuel refuel);
         Task<int> Delete(Refuel refuel);
         int SaveChanges();
+        bool IsUserOwnsRefuel(int userId, int refuelId);
+        Refuel GetRefuelById(int refuelId);
+        Vehicle GetRefuelsVehicle(int refuelId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Database.Models
@@ -14,7 +15,14 @@ namespace Database.Models
         public string Description { get; set; }
         public User Owner { get; set; }
         public virtual ICollection<Refuel> Refuels { get; set; }
-
+        [NotMapped]
+        public string Name 
+        {
+            get
+            {
+                return $"{Manufacturer} {Model}";
+            }
+        }
         public Vehicle()
         {
             Refuels = new List<Refuel>();
