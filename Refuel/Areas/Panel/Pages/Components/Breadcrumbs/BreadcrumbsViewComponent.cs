@@ -100,6 +100,10 @@ namespace Refuel.Components.Breadcrumbs
                     {
                         return $"Tankowanie #{value}";
                     }
+                    else if (subkey == "Add")
+                    {
+                        return "Nowe tankowanie";
+                    }
                     
                     return "*** BŁĄD ***";
 
