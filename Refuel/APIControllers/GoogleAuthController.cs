@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System;
 using System.Net.Http;
-using Refuel.POCOs;
+using Refuel.APIModels;
 
 namespace Refuel.APIControllers
 {
