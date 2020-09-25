@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Database.Models;
 using Microsoft.EntityFrameworkCore;
+using Database.Models.NonDb;
 
 namespace Database
 {
@@ -147,6 +148,24 @@ namespace Database
                 .FirstOrDefaultAsync(vehicle => vehicle.ID == vehicleId);
 
             return vehicle?.Owner?.ID;
+        }
+
+        public async Task<VehicleCosts> GetVehicleTotalCosts(Vehicle vehicle)
+        {
+            var matchingRefuels = _ctx.Refuels.Include(refuel => refuel.Vehicle)
+                .Where(refuel => refuel.Vehicle == vehicle);
+
+            var totalCosts = await matchingRefuels.SumAsync(refuel => refuel.TotalPrice);
+
+            var groupedCosts = matchingRefuels.GroupBy(refuel => refuel.Fuel)
+                .Select(refuel => new { refuel.Key, Sum = refuel.Sum(refuel => refuel.TotalPrice)})
+                .ToDictionary(group => group.Key, group => group.Sum);
+
+            return new VehicleCosts()
+            {
+                TotalCosts = totalCosts,
+                CostsPerFuelType = groupedCosts
+            };
         }
 
         public bool IsUserOwnsVehicle(int userId, int vehicleId)

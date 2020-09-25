@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Database.Models;
+using Database.Models.NonDb;
 
 namespace Database
 {
@@ -24,5 +25,6 @@ namespace Database
         Vehicle GetVehicleById(int i_vehicleId);
         IEnumerable<Vehicle> GetAllUserVehicles(int userId);
         bool IsUserOwnsVehicle(int userId, int vehicleId);
+        Task<VehicleCosts> GetVehicleTotalCosts(Vehicle vehicle);
     }
 }

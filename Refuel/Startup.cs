@@ -48,7 +48,7 @@ namespace Refuel
             services.AddScoped<IRefuelsManager, RefuelsManager>();
             services.AddSingleton<IDictionaryService, DictionaryService>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddOptions();
