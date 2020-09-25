@@ -132,7 +132,7 @@ namespace Database
         {
             return _ctx.Vehicles.Include(vehicle => vehicle.Owner)
                 .Include(vehicle => vehicle.Refuels)
-                .First(vehicle => vehicle.ID == i_vehicleId);
+                .FirstOrDefault(vehicle => vehicle.ID == i_vehicleId);
         }
 
         public string GetVehicleManufacturerAndModelById(int id)

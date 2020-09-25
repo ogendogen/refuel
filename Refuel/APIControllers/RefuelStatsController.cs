@@ -51,7 +51,7 @@ namespace Refuel.APIControllers
             {
                 return new RefuelStatsError()
                 {
-                    Message = "access denied"
+                    Message = "not an owner"
                 };
             }
 
