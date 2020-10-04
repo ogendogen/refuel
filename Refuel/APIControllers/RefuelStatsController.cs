@@ -27,33 +27,15 @@ namespace Refuel.APIControllers
         [HttpGet("GetVehicleData")]
         public async Task<ActionResult<RefuelStatsAPIResponse>> GetVehicleData(int vehicleId)
         {
-            var claim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
-            if (claim == null)
+            if (!IsAuthorized(vehicleId, out string errorMessage))
             {
                 return new RefuelStatsError()
                 {
-                    Message = "access denied"
-                };
-            }
-
-            int userId = Int32.Parse(claim.Value);
-            User user = await _usersManager.GetUserById(userId);
-            if (user == null)
-            {
-                return new RefuelStatsError()
-                {
-                    Message = "access denied"
+                    Message = errorMessage
                 };
             }
 
             Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
-            if (!_vehiclesManager.IsUserOwnsVehicle(userId, vehicleId))
-            {
-                return new RefuelStatsError()
-                {
-                    Message = "not an owner"
-                };
-            }
 
             return new RefuelStatsCorrectResponse()
             {
@@ -67,10 +49,43 @@ namespace Refuel.APIControllers
         [HttpGet("GetVehicleFuelStats")]
         public async Task<ActionResult<RefuelStatsAPIResponse>> GetVehicleFuelStats(int vehicleId, FuelType fuelType)
         {
-            return new RefuelStatsCorrectResponse()
+            if (!IsAuthorized(vehicleId, out string errorMessage))
             {
-                Message = "ok"
-            };
+                return new RefuelStatsError()
+                {
+                    Message = errorMessage
+                };
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private bool IsAuthorized(int vehicleId, out string errorMessage)
+        {
+            var claim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
+            if (claim == null)
+            {
+                errorMessage = "access denied";
+                return false;
+            }
+
+            int userId = Int32.Parse(claim.Value);
+            User user = _usersManager.GetUserById(userId).Result;
+            if (user == null)
+            {
+                errorMessage = "access denied";
+                return false;
+            }
+
+            Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
+            if (!_vehiclesManager.IsUserOwnsVehicle(userId, vehicleId))
+            {
+                errorMessage = "not an owner";
+                return false;
+            }
+
+            errorMessage = "";
+            return true;
         }
     }
 }
