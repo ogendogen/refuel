@@ -24,7 +24,7 @@ namespace Refuel.APIControllers
             _vehiclesManager = vehiclesManager;
         }
 
-        [HttpGet("GetVehicleData/{vehicleId}")]
+        [HttpGet("GetVehicleData")]
         public async Task<ActionResult<RefuelStatsAPIResponse>> GetVehicleData(int vehicleId)
         {
             var claim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type.Contains("nameidentifier"));
@@ -61,6 +61,15 @@ namespace Refuel.APIControllers
                 AverageCombustion = _vehiclesManager.GetVehicleAverageCombustion(vehicle),
                 PriceFor100Km = _vehiclesManager.GetPriceForNKilometers(vehicle, 100),
                 TotalCosts = await _vehiclesManager.GetVehicleTotalCosts(vehicle)
+            };
+        }
+
+        [HttpGet("GetVehicleFuelStats")]
+        public async Task<ActionResult<RefuelStatsAPIResponse>> GetVehicleFuelStats(int vehicleId, FuelType fuelType)
+        {
+            return new RefuelStatsCorrectResponse()
+            {
+                Message = "ok"
             };
         }
     }
