@@ -47,7 +47,7 @@ namespace Refuel.APIControllers
         }
 
         [HttpGet("GetVehicleFuelStats")]
-        public async Task<ActionResult<RefuelStatsAPIResponse>> GetVehicleFuelStats(int vehicleId, FuelType fuelType)
+        public ActionResult<RefuelStatsAPIResponse> GetVehicleFuelStats(int vehicleId, FuelType fuelType)
         {
             if (!IsAuthorized(vehicleId, out string errorMessage))
             {
@@ -57,7 +57,14 @@ namespace Refuel.APIControllers
                 };
             }
 
-            throw new NotImplementedException();
+            Vehicle vehicle = _vehiclesManager.GetVehicleById(vehicleId);
+
+            return new RefuelStatsVehicleFuelStats()
+            {
+                Message = "ok",
+                FuelTotalPrice = _vehiclesManager.GetTotalCost(vehicle, fuelType),
+                RefuelsDataForCharts = _vehiclesManager.GetAllVehicleRefuelsByFuelTypeAndSortedByDate(vehicle, fuelType).ToList()
+            };
         }
 
         private bool IsAuthorized(int vehicleId, out string errorMessage)

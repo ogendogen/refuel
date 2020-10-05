@@ -67,6 +67,22 @@ namespace Database
                 .AsEnumerable();
         }
 
+        public IEnumerable<RefuelChartData> GetAllVehicleRefuelsByFuelTypeAndSortedByDate(Vehicle vehicle, FuelType fuelType)
+        {
+            var refuels = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle && refuel.Fuel == fuelType)
+                .OrderBy(refuel => refuel.Date)
+                .Select(refuel => 
+                    new RefuelChartData
+                    {
+                        Combustion = refuel.Combustion,
+                        RefuelDate = refuel.Date,
+                        Price = refuel.PricePerLiter
+                    })
+                .AsEnumerable();
+
+            return refuels;
+        }
+
         public IEnumerable<Refuel> GetAllVehicleRefuelsSortedDescendingByDate(Vehicle vehicle)
         {
             var collection = _ctx.Refuels.Where(refuel => refuel.Vehicle == vehicle)
