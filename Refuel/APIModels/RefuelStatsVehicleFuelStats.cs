@@ -10,5 +10,9 @@ namespace Refuel.APIModels
     {
         public List<RefuelChartData> RefuelsDataForCharts { get; set; }
         public decimal FuelTotalPrice { get; set; }
+        public RefuelStatsVehicleFuelStats()
+        {
+            RefuelsDataForCharts = new List<RefuelChartData>();
+        }
     }
 }
