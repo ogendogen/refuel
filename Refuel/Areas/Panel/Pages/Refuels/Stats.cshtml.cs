@@ -12,7 +12,6 @@ namespace Refuel.Areas.Panel.Pages.Refuels
     public class StatsModel : PageModel
     {
         private readonly IVehiclesManager _vehiclesManager;
-
         public StatsModel(IVehiclesManager vehiclesManager)
         {
             _vehiclesManager = vehiclesManager;

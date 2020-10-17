@@ -1,20 +1,29 @@
 ﻿@page "{vehicleId:int}"
 @model Refuel.Areas.Panel.Pages.Refuels.StatsModel
 @{
+
 }
 
-<h2>Stats go here</h2>
+<div class="row">
+    <div class="col-md-10">
+        <h2>Stats go here</h2>
+    </div>
+    <div class="col-md-2">
+        <select asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" class="form-control">
+        </select>
+    </div>
+</div>
 <div class="row marginTop20">
     <div class="col-md-6">
         <div class="alert alert-success">
-            Cena za 100km<br />
-            123.123123
+            <p>Cena za 100km</p>
+            <p class="noLineHeight" id="priceFor100Km">0.00</p>
         </div>
     </div>
     <div class="col-md-6">
         <div class="alert alert-success">
-            Średnie spalanie<br />
-            234.345345
+            <p>Średnie spalanie</p>
+            <p class="noLineHeight" id="priceFor100Km">0.00</p>
         </div>
     </div>
 </div>
