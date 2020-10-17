@@ -24,15 +24,9 @@ $.myChart = new Chart(ctx, {
     }
 });
 
-var x = 1;
-
 function handleFuelType() {
     var fuelType = $("#fuelsList").val();
     getFuelData(fuelType);
-}
-
-function removeData() {
-
 }
 
 function getFuelData(fuelType) {
