@@ -56,7 +56,7 @@ function getFuelData(fuelType) {
             $.myChart.update();
         }
         else {
-            alert("error");
+            alert("error: " + data["message"]);
         }
 
     });
