@@ -24,6 +24,7 @@ namespace Refuel.Areas.Panel.Pages.Refuels
                 return Forbid();
             }
 
+            ViewData["vehicleName"] = _vehiclesManager.GetVehicleManufacturerAndModelById(vehicleId);
             return Page();
         }
     }
