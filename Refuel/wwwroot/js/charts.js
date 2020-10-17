@@ -16,7 +16,7 @@ $.myChart = new Chart(ctx, {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: false
                 }
             }]
         },
@@ -26,6 +26,15 @@ $.myChart = new Chart(ctx, {
 
 var x = 1;
 
+function handleFuelType() {
+    var fuelType = $("#fuelsList").val();
+    getFuelData(fuelType);
+}
+
+function removeData() {
+
+}
+
 function getFuelData(fuelType) {
 
     var urlParts = window.location.href.split("/");
@@ -34,6 +43,15 @@ function getFuelData(fuelType) {
     $.get("/api/refuelstats/GetVehicleFuelStats", { vehicleId: vehicleId, fuelType: fuelType }, function (data) {
 
         if (data["message"] == "ok") {
+
+            while ($.myChart.data.labels.length > 0) {
+                $.myChart.data.labels.pop();
+            }
+
+            $.myChart.data.datasets.forEach((dataset) => {
+                dataset.data.pop();
+            });
+
             for (var i = 0; i < data["refuelsDataForCharts"].length; i++) {
                 $.myChart.data.labels.push(data["refuelsDataForCharts"][i]["refuelDate"].replace("T", "\r\n"));
 

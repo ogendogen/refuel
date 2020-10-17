@@ -9,7 +9,8 @@
         <h2>Statystyki pojazdu @ViewData["vehicleName"]</h2>
     </div>
     <div class="col-md-2">
-        <select asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" class="form-control">
+        <select asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" id="fuelsList" class="form-control" onchange="handleFuelType()">
+            <option hidden disabled selected value="">Wybierz paliwo</option>
         </select>
     </div>
 </div>
