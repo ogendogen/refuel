@@ -24,12 +24,33 @@ $.myChart = new Chart(ctx, {
     }
 });
 
-function handleFuelType() {
-    var fuelType = $("#fuelsList").val();
-    getFuelData(fuelType);
+function getGeneralData() {
+
+    var urlParts = window.location.href.split("/");
+    var vehicleId = urlParts[urlParts.length - 1];
+
+    $.get("/api/refuelstats/GetVehicleData", { vehicleId: vehicleId }, function (data) {
+
+        if (data["message"] == "ok") {
+            $("#priceFor100Km").text(data["priceFor100Km"]);
+            $("#averageCombustion").text(data["averageCombustion"]);
+        }
+        else {
+            alert("error: " + data["message"]);
+        }
+    });
 }
 
-function getFuelData(fuelType) {
+$(document).ready(function () {
+    getGeneralData();
+});
+
+function handleFuelType() {
+    var fuelType = $("#fuelsList").val();
+    getCombustionChart(fuelType);
+}
+
+function getCombustionChart(fuelType) {
 
     var urlParts = window.location.href.split("/");
     var vehicleId = urlParts[urlParts.length - 1];
