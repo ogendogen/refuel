@@ -34,6 +34,7 @@ function getGeneralData() {
         if (data["message"] == "ok") {
             $("#priceFor100Km").text(data["priceFor100Km"]);
             $("#averageCombustion").text(data["averageCombustion"]);
+            $("#totalCosts").text(data["totalCosts"]["totalCosts"]);
         }
         else {
             alert("error: " + data["message"]);
