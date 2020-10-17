@@ -1,4 +1,5 @@
 ﻿@page "{vehicleId:int}"
+@using RefuelType = Database.Models.Refuel
 @model Refuel.Areas.Panel.Pages.Refuels.StatsModel
 @{
 
@@ -29,10 +30,31 @@
     </div>
     <div class="col-md-4">
         <div class="alert alert-success">
-            <p>Sumaryczne koszty:</p>
+            <p>Sumaryczne koszty</p>
             <p class="noLineHeight font-weight-bold" id="totalCosts">0.00</p>
         </div>
     </div>
+</div>
+<div class="row marginTop20">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach (Database.Models.FuelType fuelType in (Database.Models.FuelType[])Enum.GetValues(typeof(Database.Models.FuelType)))
+                {
+                    <td class="table-primary text-center">@Utils.EnumDescriptionHelper.GetDisplayName(fuelType)</td>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="petrolTypesRow">
+                @*<td class="table-warning text-center">aaa</td>
+                <td class="table-warning text-center">aaa</td>
+                <td class="table-warning text-center">aaa</td>
+                <td class="table-warning text-center">aaa</td>
+                <td class="table-warning text-center">aaa</td>*@
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div class="row marginTop20">
     <canvas id="myChart" style="width: 50%;" height="500"></canvas>
