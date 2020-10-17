@@ -121,12 +121,12 @@
     <div class="col-sm-12 col-md-10">
         @if (isDetails)
         {
-            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>().GetDescribedFuelTypes()" disabled="disabled" class="form-control">
+            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" disabled="disabled" class="form-control">
             </select>
         }
         else
         {
-            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>().GetDescribedFuelTypes()" class="form-control">
+            <select asp-for="Input.Fuel" asp-items="Html.GetEnumSelectList<Database.Models.FuelType>()" class="form-control">
             </select>
         }
 
