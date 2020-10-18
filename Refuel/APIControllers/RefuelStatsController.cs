@@ -42,7 +42,8 @@ namespace Refuel.APIControllers
                 Message = "ok",
                 AverageCombustion = Math.Round(_vehiclesManager.GetVehicleAverageCombustion(vehicle), 2),
                 PriceFor100Km = Math.Round(_vehiclesManager.GetPriceForNKilometers(vehicle, 100), 2),
-                TotalCosts = await _vehiclesManager.GetVehicleTotalCosts(vehicle)
+                TotalCosts = await _vehiclesManager.GetVehicleTotalCosts(vehicle),
+                DataPerFuelType = _vehiclesManager.GetVehicleDataPerFuelType(vehicle)
             };
         }
 

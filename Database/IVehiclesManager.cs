@@ -25,7 +25,8 @@ namespace Database
         Vehicle GetVehicleById(int i_vehicleId);
         IEnumerable<Vehicle> GetAllUserVehicles(int userId);
         bool IsUserOwnsVehicle(int userId, int vehicleId);
-        Task<VehicleCosts> GetVehicleTotalCosts(Vehicle vehicle);
+        DataPerFuelType GetVehicleDataPerFuelType(Vehicle vehicle);
         IEnumerable<RefuelChartData> GetAllVehicleRefuelsByFuelTypeAndSortedByDate(Vehicle vehicle, FuelType fuelType);
+        Task<decimal> GetVehicleTotalCosts(Vehicle vehicle);
     }
 }

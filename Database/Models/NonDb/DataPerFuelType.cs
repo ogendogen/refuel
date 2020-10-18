@@ -4,13 +4,12 @@ using System.Text;
 
 namespace Database.Models.NonDb
 {
-    public class VehicleCosts
+    public class DataPerFuelType
     {
-        public decimal TotalCosts { get; set; }
         public Dictionary<FuelType, decimal> CostsPerFuelType { get; set; }
         public Dictionary<FuelType, decimal> AverageCombustionPerFuelType { get; set; }
         public Dictionary<FuelType, decimal> PriceFor100KmPerFuelType { get; set; }
-        public VehicleCosts()
+        public DataPerFuelType()
         {
             CostsPerFuelType = new Dictionary<FuelType, decimal>();
             AverageCombustionPerFuelType = new Dictionary<FuelType, decimal>();

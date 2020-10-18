@@ -11,6 +11,7 @@ namespace Refuel.APIModels
     {
         public decimal AverageCombustion { get; set; }
         public decimal PriceFor100Km { get; set; }
-        public VehicleCosts TotalCosts { get; set; }
+        public decimal TotalCosts { get; set; }
+        public DataPerFuelType DataPerFuelType { get; set; }
     }
 }

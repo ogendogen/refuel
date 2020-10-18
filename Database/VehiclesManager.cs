@@ -167,12 +167,10 @@ namespace Database
             return vehicle?.Owner?.ID;
         }
 
-        public async Task<VehicleCosts> GetVehicleTotalCosts(Vehicle vehicle)
+        public DataPerFuelType GetVehicleDataPerFuelType(Vehicle vehicle)
         {
             var matchingRefuels = _ctx.Refuels.Include(refuel => refuel.Vehicle)
                 .Where(refuel => refuel.Vehicle == vehicle);
-
-            var totalCosts = await matchingRefuels.SumAsync(refuel => refuel.TotalPrice);
 
             var groupedCosts = matchingRefuels.GroupBy(refuel => refuel.Fuel)
                 .Select(refuel => new { refuel.Key, Sum = refuel.Sum(refuel => refuel.TotalPrice)})
@@ -186,9 +184,8 @@ namespace Database
                 .Select(refuel => new { refuel.Key, PriceFor100Km = 100 * refuel.Sum(refuel => refuel.TotalPrice) / refuel.Sum(refuel => refuel.Kilometers)})
                 .ToDictionary(group => group.Key, group => group.PriceFor100Km);
 
-            return new VehicleCosts()
+            return new DataPerFuelType()
             {
-                TotalCosts = totalCosts,
                 CostsPerFuelType = groupedCosts,
                 AverageCombustionPerFuelType = groupedCombustion,
                 PriceFor100KmPerFuelType = groupedPriceFor100Km
@@ -211,6 +208,12 @@ namespace Database
             _ctx.Vehicles.Update(vehicle);
 
             return await _ctx.SaveChangesAsync();
+        }
+
+        public async Task<decimal> GetVehicleTotalCosts(Vehicle vehicle)
+        {
+            return await _ctx.Refuels.Where(dbVehicle => dbVehicle.ID == vehicle.ID)
+                .SumAsync(refuel => refuel.TotalPrice);
         }
     }
 }
