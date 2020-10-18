@@ -48,10 +48,6 @@ function getGeneralData() {
                 }
 
             });
-            //for (const [key, value] of Object.entries(fuels)) {
-            //    //console.log(`${key}: ${value}`);
-
-            //}
         }
         else {
             alert("error: " + data["message"]);
