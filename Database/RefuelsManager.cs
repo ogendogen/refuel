@@ -75,9 +75,9 @@ namespace Database
                _ctx.Entry(entry).CurrentValues.SetValues(refuel);
                return _ctx.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                 // handle correct exception
+                 // todo: handle correct exception
                  // log error
                  return 0;
             }
