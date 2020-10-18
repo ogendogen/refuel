@@ -40,8 +40,8 @@ namespace Refuel.APIControllers
             return new RefuelStatsCorrectResponse()
             {
                 Message = "ok",
-                AverageCombustion = _vehiclesManager.GetVehicleAverageCombustion(vehicle),
-                PriceFor100Km = _vehiclesManager.GetPriceForNKilometers(vehicle, 100),
+                AverageCombustion = Math.Round(_vehiclesManager.GetVehicleAverageCombustion(vehicle), 2),
+                PriceFor100Km = Math.Round(_vehiclesManager.GetPriceForNKilometers(vehicle, 100), 2),
                 TotalCosts = await _vehiclesManager.GetVehicleTotalCosts(vehicle)
             };
         }
