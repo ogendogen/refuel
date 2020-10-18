@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.NonDb;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Database
 {
@@ -177,10 +178,20 @@ namespace Database
                 .Select(refuel => new { refuel.Key, Sum = refuel.Sum(refuel => refuel.TotalPrice)})
                 .ToDictionary(group => group.Key, group => group.Sum);
 
+            var groupedCombustion = matchingRefuels.GroupBy(refuel => refuel.Fuel)
+                .Select(refuel => new { refuel.Key, AvgCombustion = 100 * refuel.Sum(refuel => refuel.Liters) / refuel.Sum(refuel => refuel.Kilometers)})
+                .ToDictionary(group => group.Key, group => group.AvgCombustion);
+
+            var groupedPriceFor100Km = matchingRefuels.GroupBy(refuel => refuel.Fuel)
+                .Select(refuel => new { refuel.Key, PriceFor100Km = 100 * refuel.Sum(refuel => refuel.TotalPrice) / refuel.Sum(refuel => refuel.Kilometers)})
+                .ToDictionary(group => group.Key, group => group.PriceFor100Km);
+
             return new VehicleCosts()
             {
                 TotalCosts = totalCosts,
-                CostsPerFuelType = groupedCosts
+                CostsPerFuelType = groupedCosts,
+                AverageCombustionPerFuelType = groupedCombustion,
+                PriceFor100KmPerFuelType = groupedPriceFor100Km
             };
         }
 
