@@ -39,6 +39,7 @@
     <table class="table table-bordered">
         <thead>
             <tr id="petrolTypesHeader">
+                <td class="table-primary text-center">Opis/Typ Paliwa</td>
                 @foreach (Database.Models.FuelType fuelType in (Database.Models.FuelType[])Enum.GetValues(typeof(Database.Models.FuelType)))
                 {
                     <td class="table-primary text-center" id="@fuelType">@Utils.EnumDescriptionHelper.GetDisplayName(fuelType)</td>
@@ -46,12 +47,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="petrolTypesRow">
-                @*<td class="table-warning text-center">aaa</td>
-                <td class="table-warning text-center">aaa</td>
-                <td class="table-warning text-center">aaa</td>
-                <td class="table-warning text-center">aaa</td>
-                <td class="table-warning text-center">aaa</td>*@
+            <tr id="petrolTypesCosts">
+                <td class="alert-primary text-center">Koszty</td>
+            </tr>
+            <tr id="petrolTypesCombustion">
+                <td class="alert-primary text-center">Średnie spalanie</td>
+            </tr>
+            <tr id="petrolTypesPriceFor100Km">
+                <td class="alert-primary text-center">Cena za 100Km</td>
             </tr>
         </tbody>
     </table>

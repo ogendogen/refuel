@@ -34,17 +34,43 @@ function getGeneralData() {
         if (data["message"] == "ok") {
             $("#priceFor100Km").text(data["priceFor100Km"]);
             $("#averageCombustion").text(data["averageCombustion"]);
-            $("#totalCosts").text(data["totalCosts"]["totalCosts"]);
+            $("#totalCosts").text(data["totalCosts"]);
 
-            var fuels = data["totalCosts"]["costsPerFuelType"];
-            var fuelRows = $("#petrolTypesRow");
+            var dataPerFuelType = data["dataPerFuelType"];
+
+            var fuelsCosts = dataPerFuelType["costsPerFuelType"];
+            var fuelCostsRow = $("#petrolTypesCosts");
+
+            var fuelsCombustion = dataPerFuelType["averageCombustionPerFuelType"];
+            var fuelsCombustionRow = $("#petrolTypesCombustion");
+
+            var fuelsPriceFor100Km = dataPerFuelType["priceFor100KmPerFuelType"];
+            var fuelsPriceFor100KmRow = $("#petrolTypesPriceFor100Km");
 
             $("#petrolTypesHeader").children().each(function () {
 
-                if (fuels[this.id] != null) {
-                    fuelRows.append("<td class='table-warning text-center' id='row_" + this.id + "'>" + fuels[this.id].toFixed(2) + "</td>");
+                if (fuelsCosts[this.id] != null) {
+                    fuelCostsRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>" + fuelsCosts[this.id].toFixed(2) + "</td>");
                 } else {
-                    fuelRows.append("<td class='table-warning text-center' id='row_" + this.id + "'>0.00</td>");
+                    if (this.id !== "") {
+                        fuelCostsRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>0.00</td>");
+                    }
+                }
+
+                if (fuelsCombustion[this.id] != null) {
+                    fuelsCombustionRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>" + fuelsCombustion[this.id].toFixed(2) + "</td>");
+                } else {
+                    if (this.id !== "") {
+                        fuelsCombustionRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>0.00</td>");
+                    }
+                }
+
+                if (fuelsPriceFor100Km[this.id] != null) {
+                    fuelsPriceFor100KmRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>" + fuelsPriceFor100Km[this.id].toFixed(2) + "</td>");
+                } else {
+                    if (this.id !== "") {
+                        fuelsPriceFor100KmRow.append("<td class='table-warning text-center' id='costs_" + this.id + "'>0.00</td>");
+                    }
                 }
 
             });
