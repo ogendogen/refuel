@@ -1,5 +1,5 @@
-﻿var ctx = document.getElementById('myChart').getContext('2d');
-$.myChart = new Chart(ctx, {
+﻿var ctxCombustion = document.getElementById('combustionChart').getContext('2d');
+$.combustionChart = new Chart(ctxCombustion, {
     type: 'line',
     data: {
         labels: [],
@@ -9,6 +9,32 @@ $.myChart = new Chart(ctx, {
             borderWidth: 2,
             borderColor: "lime",
             borderBackground: "lime",
+            fill: false
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false
+                }
+            }]
+        },
+        responsive: false
+    }
+});
+
+var ctxPrice = document.getElementById('priceChart').getContext('2d');
+$.priceChart = new Chart(ctxPrice, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Cena',
+            data: [],
+            borderWidth: 2,
+            borderColor: "red",
+            borderBackground: "red",
             fill: false
         }]
     },
@@ -87,10 +113,6 @@ $(document).ready(function () {
 
 function handleFuelType() {
     var fuelType = $("#fuelsList").val();
-    getCombustionChart(fuelType);
-}
-
-function getCombustionChart(fuelType) {
 
     var urlParts = window.location.href.split("/");
     var vehicleId = urlParts[urlParts.length - 1];
@@ -99,26 +121,50 @@ function getCombustionChart(fuelType) {
 
         if (data["message"] == "ok") {
 
-            while ($.myChart.data.labels.length > 0) {
-                $.myChart.data.labels.pop();
-            }
-
-            $.myChart.data.datasets.forEach((dataset) => {
-                dataset.data.pop();
-            });
-
-            for (var i = 0; i < data["refuelsDataForCharts"].length; i++) {
-                $.myChart.data.labels.push(data["refuelsDataForCharts"][i]["refuelDate"].replace("T", "\r\n"));
-
-                var dataset = $.myChart.data.datasets[0];
-                dataset.data.push(data["refuelsDataForCharts"][i]["combustion"]);
-            }
-
-            $.myChart.update();
+            getCombustionChart(data);
+            getPriceChart(data);
         }
         else {
             alert("error: " + data["message"]);
         }
 
     });
+}
+
+function getCombustionChart(data) {
+    while ($.combustionChart.data.labels.length > 0) {
+        $.combustionChart.data.labels.pop();
+    }
+
+    $.combustionChart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+
+    for (var i = 0; i < data["refuelsDataForCharts"].length; i++) {
+        $.combustionChart.data.labels.push(data["refuelsDataForCharts"][i]["refuelDate"].replace("T", "\r\n"));
+
+        var dataset = $.combustionChart.data.datasets[0];
+        dataset.data.push(data["refuelsDataForCharts"][i]["combustion"]);
+    }
+
+    $.combustionChart.update();
+}
+
+function getPriceChart(data) {
+    while ($.priceChart.data.labels.length > 0) {
+        $.priceChart.data.labels.pop();
+    }
+
+    $.priceChart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+
+    for (var i = 0; i < data["refuelsDataForCharts"].length; i++) {
+        $.priceChart.data.labels.push(data["refuelsDataForCharts"][i]["refuelDate"].replace("T", "\r\n"));
+
+        var dataset = $.priceChart.data.datasets[0];
+        dataset.data.push(data["refuelsDataForCharts"][i]["price"]);
+    }
+
+    $.priceChart.update();
 }
