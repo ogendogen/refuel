@@ -38,10 +38,10 @@
 <div class="row marginTop20">
     <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr id="petrolTypesHeader">
                 @foreach (Database.Models.FuelType fuelType in (Database.Models.FuelType[])Enum.GetValues(typeof(Database.Models.FuelType)))
                 {
-                    <td class="table-primary text-center">@Utils.EnumDescriptionHelper.GetDisplayName(fuelType)</td>
+                    <td class="table-primary text-center" id="@fuelType">@Utils.EnumDescriptionHelper.GetDisplayName(fuelType)</td>
                 }
             </tr>
         </thead>

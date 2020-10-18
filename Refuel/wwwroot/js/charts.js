@@ -35,6 +35,23 @@ function getGeneralData() {
             $("#priceFor100Km").text(data["priceFor100Km"]);
             $("#averageCombustion").text(data["averageCombustion"]);
             $("#totalCosts").text(data["totalCosts"]["totalCosts"]);
+
+            var fuels = data["totalCosts"]["costsPerFuelType"];
+            var fuelRows = $("#petrolTypesRow");
+
+            $("#petrolTypesHeader").children().each(function () {
+
+                if (fuels[this.id] != null) {
+                    fuelRows.append("<td class='table-warning text-center' id='row_" + this.id + "'>" + fuels[this.id].toFixed(2) + "</td>");
+                } else {
+                    fuelRows.append("<td class='table-warning text-center' id='row_" + this.id + "'>0.00</td>");
+                }
+
+            });
+            //for (const [key, value] of Object.entries(fuels)) {
+            //    //console.log(`${key}: ${value}`);
+
+            //}
         }
         else {
             alert("error: " + data["message"]);
