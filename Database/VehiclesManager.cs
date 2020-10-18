@@ -212,7 +212,7 @@ namespace Database
 
         public async Task<decimal> GetVehicleTotalCosts(Vehicle vehicle)
         {
-            return await _ctx.Refuels.Where(dbVehicle => dbVehicle.ID == vehicle.ID)
+            return await _ctx.Refuels.Where(refuel => refuel.Vehicle.ID == vehicle.ID)
                 .SumAsync(refuel => refuel.TotalPrice);
         }
     }
