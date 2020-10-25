@@ -100,6 +100,13 @@ namespace Refuel.Components.Breadcrumbs
                     {
                         return $"Tankowanie #{value}";
                     }
+                    else if (subkey == "Stats")
+                    {
+                        if (Int32.TryParse(value, out int id2))
+                        {
+                            return _vehicleManager.GetVehicleManufacturerAndModelById(id2);
+                        }
+                    }
                     else if (subkey == "Add")
                     {
                         return "Nowe tankowanie";
