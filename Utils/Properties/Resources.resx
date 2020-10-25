@@ -131,6 +131,7 @@
 			&lt;item key="vehicleId"&gt;Pojazd&lt;/item&gt;
 			&lt;item key="List"&gt;Przegląd&lt;/item&gt;
 			&lt;item key="Stats"&gt;Statystyki&lt;/item&gt;
+			&lt;item key="VehicleStats"&gt;Pojazd&lt;/item&gt;
 		&lt;/items&gt;
 		&lt;hiddenitems&gt;
 			&lt;item&gt;status&lt;/item&gt;

@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Refuel.Areas.Panel.Pages.Refuels
 {
-    public class StatsModel : PageModel
+    public class VehicleStatsModel : PageModel
     {
         private readonly IVehiclesManager _vehiclesManager;
-        public StatsModel(IVehiclesManager vehiclesManager)
+        public VehicleStatsModel(IVehiclesManager vehiclesManager)
         {
             _vehiclesManager = vehiclesManager;
         }

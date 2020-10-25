@@ -1,0 +1,44 @@
+﻿@page
+@model Refuel.Areas.Panel.Pages.Stats.IndexModel
+@{
+    bool isUserVehiclesAvaiable = (Model.UserVehicles.Count() > 0);
+}
+@addTagHelper *, Refuel
+
+<h2>Wybierz swój pojazd</h2>
+
+@if (isUserVehiclesAvaiable)
+{
+    <form method="post">
+        <div class="row marginTop20">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.VehicleListModel, new SelectList(Model.UserVehicles, "ID", "Name"), new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+        <div class="row marginTop20">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary width-100-p">Wybierz</button>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div class="row marginTop20">
+        <div class="col-md-12">
+            <div class="alert alert-warning">Nie dodałeś jeszcze żadnych pojazdów!</div>
+        </div>
+    </div>
+}

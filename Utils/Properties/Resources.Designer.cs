@@ -74,11 +74,10 @@ namespace Utils.Properties {
         ///			&lt;item key=&quot;vehicleId&quot;&gt;Pojazd&lt;/item&gt;
         ///			&lt;item key=&quot;List&quot;&gt;Przegląd&lt;/item&gt;
         ///			&lt;item key=&quot;Stats&quot;&gt;Statystyki&lt;/item&gt;
+        ///			&lt;item key=&quot;VehicleStats&quot;&gt;Pojazd&lt;/item&gt;
         ///		&lt;/items&gt;
         ///		&lt;hiddenitems&gt;
-        ///			&lt;item&gt;status&lt;/item&gt;
-        ///		&lt;/hiddenitems&gt;
-        ///	 [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Dictionary {
             get {
