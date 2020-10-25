@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $.fn.dataTable.moment('DD-MM-yyyy HH:mm');
     $('#table_id').dataTable({
         "language": {
             "processing": "Przetwarzanie...",
