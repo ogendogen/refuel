@@ -1,4 +1,4 @@
-﻿var seconds = 10;
+﻿var seconds = 3;
 
 $(document).ready(function () {
 
